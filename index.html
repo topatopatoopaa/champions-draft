@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ruta de Estrellas</title>
+    <link rel="preconnect" href="https://api.sofascore.app" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><img src="assets/crests/champions.png" alt=""></span>
+        <div>
+          <h1>Ruta de Estrellas</h1>
+          <p>Draft historico de Champions</p>
+        </div>
+      </div>
+      <div class="season-pill">
+        <span id="gameStateLabel">Previa</span>
+        <strong id="formationLabel">--</strong>
+      </div>
+      <div class="language-options header-language" id="languageOptions">
+        <button class="language-option active" data-lang="es">ES</button>
+        <button class="language-option" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="setup-panel" id="setupPanel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Antes de empezar</p>
+            <h2>Elegí tu formación</h2>
+          </div>
+        </div>
+        <div class="formation-options" id="formationOptions"></div>
+        <div class="difficulty-options" id="difficultyOptions">
+          <button class="difficulty-option active" data-difficulty="normal">Normal</button>
+          <button class="difficulty-option" data-difficulty="hard">Difícil</button>
+        </div>
+        <button id="startGame" class="primary-button">Empezar draft</button>
+      </section>
+
+      <section class="manager-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Tu plantilla</p>
+            <h2>XI titular</h2>
+          </div>
+          <button id="newRun" class="icon-button" title="Nueva partida" aria-label="Nueva partida">New</button>
+        </div>
+
+        <div class="squad-meta">
+          <div>
+            <span>Ronda</span>
+            <strong id="roundLabel">0</strong>
+          </div>
+          <div>
+            <span>Jugadores</span>
+            <strong id="countLabel">0/11</strong>
+          </div>
+          <div>
+            <span>Media</span>
+            <strong id="ratingLabel">0</strong>
+          </div>
+        </div>
+
+        <div class="pitch-wrap">
+          <div class="formation" id="formation"></div>
+        </div>
+
+        <div class="actions">
+          <button id="simulate" class="primary-button" disabled>Jugar Champions</button>
+          <button id="clearTeam" class="ghost-button">Reiniciar</button>
+        </div>
+      </section>
+
+      <section class="draft-panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Equipo rolado</p>
+            <h2>Elegí un jugador</h2>
+          </div>
+          <button id="rollTeam" class="ghost-button big-blue-button"><span>Otro equipo (3)</span></button>
+        </div>
+
+        <div class="roll-meter">
+          <span>Cambios extra</span>
+          <strong id="rollsLabel">3</strong>
+        </div>
+
+        <div class="team-card" id="teamCard">
+          <img class="team-crest" id="teamCrest" alt="" />
+          <div>
+            <p id="teamEra" class="eyebrow">Ronda</p>
+            <h3 id="teamName">Elegí formación</h3>
+            <p id="teamNote">Cuando empiece la partida aparece un equipo random.</p>
+          </div>
+        </div>
+
+        <button id="throwTeam" class="throw-button"><img src="assets/crests/dados.png" alt=""> <span>Tirar</span></button>
+        <div class="roulette-track" id="rouletteTrack"></div>
+        <div class="need-strip" id="needStrip"></div>
+        <div class="market-list" id="rosterList"></div>
+      </section>
+
+    </main>
+
+    <section class="champions-page hidden" id="championsPage">
+      <section class="tournament-panel tournament-panel-full">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Simulación</p>
+            <h2>Camino a la copa</h2>
+          </div>
+          <div class="head-actions">
+            <button id="backToDraft" class="ghost-button">Volver</button>
+            <button id="showData" class="ghost-button">Datos</button>
+          </div>
+        </div>
+
+        <div class="sim-mode" role="tablist" aria-label="Modo de simulación">
+          <button class="sim-mode-button active" data-sim-mode="manual">Normal</button>
+          <button class="sim-mode-button" data-sim-mode="auto">Rápido</button>
+        </div>
+
+        <div class="champions-start" id="championsStart">
+          <p id="simModeHelp">Normal pausa entre partidos. Rápido los juega todos seguidos con la misma animación.</p>
+          <button id="startTournament" class="primary-button">Comenzar partidos</button>
+        </div>
+
+        <div class="match-stage" id="matchStage">
+          <p class="empty-state">Completa tu once para jugar la Champions.</p>
+        </div>
+        <div class="bracket" id="bracket"></div>
+      </section>
+    </section>
+
+    <dialog id="positionDialog">
+      <div class="modal-head">
+        <h2 id="pickTitle">Elegir posición</h2>
+        <button id="closePick" class="icon-button" aria-label="Cerrar">X</button>
+      </div>
+      <p id="pickMeta"></p>
+      <div class="position-choices" id="positionChoices"></div>
+    </dialog>
+
+    <dialog id="resultDialog">
+      <div class="result-modal" id="resultModal"></div>
+    </dialog>
+
+    <dialog id="dataDialog">
+      <div class="modal-head">
+        <h2>Datos usados</h2>
+        <button id="closeData" class="icon-button" aria-label="Cerrar">X</button>
+      </div>
+      <p>
+        Dataset local inspirado en temporadas de UEFA Champions League y paginas publicas de SofaScore.
+        Incluye equipos campeones, finalistas y clubes de menor nivel para que el draft tenga riesgo.
+      </p>
+      <ul>
+        <li>Planteles historicos con puntaje aproximado del momento.</li>
+        <li>Posiciones especificas: POR, DFC, LI, LD, MCD, MC, MCO, MI, MD, EI, ED, DC.</li>
+        <li>Partidos con animación, goleadores y penales en eliminatorias empatadas.</li>
+      </ul>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

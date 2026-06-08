@@ -28,11 +28,32 @@ const POS_EN = {
   ST: "ST"
 };
 
+const POS_PT = {
+  GK: "GOL",
+  CB: "ZAG",
+  LB: "LE",
+  RB: "LD",
+  DM: "VOL",
+  CM: "MC",
+  AM: "MEI",
+  LM: "ME",
+  RM: "MD",
+  LW: "PE",
+  RW: "PD",
+  ST: "CA"
+};
+
 const formations = {
-  "4-3-3": [["LW", "ST", "RW"], ["CM", "DM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-3-3": [["LW", "ST", "RW"], ["CM", "CM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-3-3 (2)": [["LW", "ST", "RW"], ["CM", "DM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]],
   "4-4-2": [["ST", "ST"], ["LM", "CM", "CM", "RM"], ["LB", "CB", "CB", "RB"], ["GK"]],
   "4-2-3-1": [["ST"], ["LW", "AM", "RW"], ["DM", "DM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-1-4-1": [["ST"], ["LM", "CM", "CM", "RM"], ["DM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-3-1-2": [["ST", "ST"], ["AM"], ["CM", "DM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-2-2-2": [["ST", "ST"], ["AM", "AM"], ["DM", "DM"], ["LB", "CB", "CB", "RB"], ["GK"]],
   "3-5-2": [["ST", "ST"], ["LM", "CM", "DM", "CM", "RM"], ["CB", "CB", "CB"], ["GK"]],
+  "3-4-3": [["LW", "ST", "RW"], ["LM", "CM", "CM", "RM"], ["CB", "CB", "CB"], ["GK"]],
+  "3-4-2-1": [["ST"], ["AM", "AM"], ["LM", "CM", "CM", "RM"], ["CB", "CB", "CB"], ["GK"]],
   "5-3-2": [["ST", "ST"], ["CM", "DM", "CM"], ["LB", "CB", "CB", "CB", "RB"], ["GK"]]
 };
 
@@ -194,6 +215,111 @@ const teamPool = [
 ];
 
 teamPool.push(
+  team(2817, "Barcelona", "2008/09", "Triplete de Guardiola", 95, [
+    p("Victor Valdes", 87, ["GK"]), p("Dani Alves", 91, ["RB", "RM"]), p("Carles Puyol", 91, ["CB", "RB"]), p("Gerard Pique", 88, ["CB"]),
+    p("Eric Abidal", 86, ["LB", "CB"]), p("Yaya Toure", 88, ["DM", "CM"]), p("Xavi", 96, ["CM"]), p("Andres Iniesta", 95, ["CM", "AM", "LW"]),
+    p("Lionel Messi", 99, ["RW", "ST", "AM"]), p("Samuel Eto'o", 93, ["ST"]), p("Thierry Henry", 90, ["LW", "ST"]), p("Seydou Keita", 83, ["CM", "LM"])
+  ]),
+  team(2829, "Real Madrid", "2013/14", "La Decima de Ancelotti", 94, [
+    p("Iker Casillas", 88, ["GK"]), p("Dani Carvajal", 85, ["RB"]), p("Sergio Ramos", 93, ["CB"]), p("Pepe", 88, ["CB"]),
+    p("Fabio Coentrao", 83, ["LB"]), p("Xabi Alonso", 90, ["DM", "CM"]), p("Luka Modric", 91, ["CM"]), p("Angel Di Maria", 91, ["CM", "LM", "RM"]),
+    p("Cristiano Ronaldo", 99, ["LW", "ST"]), p("Karim Benzema", 89, ["ST"]), p("Gareth Bale", 91, ["RW", "LW"]), p("Isco", 86, ["AM", "CM"])
+  ]),
+  team(2672, "Bayern", "2012/13", "Triplete de Heynckes", 94, [
+    p("Manuel Neuer", 92, ["GK"]), p("Philipp Lahm", 93, ["RB", "DM"]), p("Dante", 86, ["CB"]), p("Jerome Boateng", 86, ["CB"]),
+    p("David Alaba", 88, ["LB", "CM"]), p("Javi Martinez", 89, ["DM", "CB"]), p("Bastian Schweinsteiger", 93, ["CM", "DM"]), p("Toni Kroos", 88, ["CM", "AM"]),
+    p("Arjen Robben", 92, ["RW"]), p("Mario Mandzukic", 88, ["ST"]), p("Franck Ribery", 93, ["LW"]), p("Thomas Muller", 90, ["AM", "ST", "RM"])
+  ]),
+  team(44, "Liverpool", "2004/05", "Milagro de Estambul", 87, [
+    p("Jerzy Dudek", 84, ["GK"]), p("Steve Finnan", 80, ["RB"]), p("Jamie Carragher", 88, ["CB"]), p("Sami Hyypia", 86, ["CB"]),
+    p("Djimi Traore", 76, ["LB"]), p("Xabi Alonso", 88, ["CM", "DM"]), p("Steven Gerrard", 93, ["CM", "AM", "RM"]), p("Dietmar Hamann", 82, ["DM", "CM"]),
+    p("Luis Garcia", 84, ["RW", "AM"]), p("Milan Baros", 82, ["ST"]), p("Harry Kewell", 82, ["LW", "LM"]), p("Vladimir Smicer", 80, ["AM", "RM"])
+  ]),
+  team(38, "Chelsea", "2020/21", "Campeon de Tuchel", 90, [
+    p("Edouard Mendy", 88, ["GK"]), p("Reece James", 87, ["RB", "RM"]), p("Thiago Silva", 89, ["CB"]), p("Antonio Rudiger", 88, ["CB"]),
+    p("Ben Chilwell", 84, ["LB", "LM"]), p("N'Golo Kante", 93, ["CM", "DM"]), p("Jorginho", 87, ["DM", "CM"]), p("Mason Mount", 87, ["AM", "CM"]),
+    p("Kai Havertz", 86, ["AM", "ST"]), p("Timo Werner", 84, ["ST", "LW"]), p("Christian Pulisic", 84, ["LW", "RW"]), p("Hakim Ziyech", 84, ["RW", "AM"])
+  ]),
+  team(2692, "Milan", "2004/05", "Finalista de Estambul", 94, [
+    p("Dida", 89, ["GK"]), p("Cafu", 88, ["RB"]), p("Alessandro Nesta", 94, ["CB"]), p("Jaap Stam", 89, ["CB"]),
+    p("Paolo Maldini", 93, ["LB", "CB"]), p("Andrea Pirlo", 94, ["DM", "CM"]), p("Gennaro Gattuso", 90, ["DM", "CM"]), p("Clarence Seedorf", 91, ["CM", "AM"]),
+    p("Kaka", 96, ["AM"]), p("Andriy Shevchenko", 94, ["ST"]), p("Hernan Crespo", 89, ["ST"]), p("Serginho", 82, ["LM", "LB"])
+  ]),
+  team(2697, "Inter", "2022/23", "Finalista de Inzaghi", 87, [
+    p("Andre Onana", 86, ["GK"]), p("Matteo Darmian", 82, ["CB", "RB"]), p("Francesco Acerbi", 84, ["CB"]), p("Alessandro Bastoni", 86, ["CB", "LB"]),
+    p("Denzel Dumfries", 83, ["RM", "RB"]), p("Hakan Calhanoglu", 86, ["DM", "CM"]), p("Nicolo Barella", 88, ["CM"]), p("Federico Dimarco", 84, ["LM", "LB"]),
+    p("Lautaro Martinez", 90, ["ST"]), p("Edin Dzeko", 84, ["ST"]), p("Romelu Lukaku", 84, ["ST"]), p("Henrikh Mkhitaryan", 83, ["CM", "AM"])
+  ]),
+  team(35, "Man United", "1998/99", "Final inolvidable en Barcelona", 93, [
+    p("Peter Schmeichel", 92, ["GK"]), p("Gary Neville", 86, ["RB"]), p("Jaap Stam", 91, ["CB"]), p("Ronny Johnsen", 84, ["CB"]),
+    p("Denis Irwin", 87, ["LB"]), p("Roy Keane", 93, ["CM", "DM"]), p("Paul Scholes", 91, ["CM", "AM"]), p("David Beckham", 92, ["RM", "CM"]),
+    p("Ryan Giggs", 91, ["LM", "LW"]), p("Dwight Yorke", 89, ["ST"]), p("Andy Cole", 88, ["ST"]), p("Ole Gunnar Solskjaer", 84, ["ST"])
+  ]),
+  team(3002, "Porto", "2003/04", "Campeon de Mourinho", 86, [
+    p("Vitor Baia", 85, ["GK"]), p("Paulo Ferreira", 84, ["RB"]), p("Ricardo Carvalho", 90, ["CB"]), p("Jorge Costa", 84, ["CB"]),
+    p("Nuno Valente", 82, ["LB"]), p("Costinha", 85, ["DM", "CM"]), p("Maniche", 87, ["CM"]), p("Deco", 91, ["AM", "CM"]),
+    p("Carlos Alberto", 83, ["RW", "AM"]), p("Benni McCarthy", 84, ["ST"]), p("Derlei", 83, ["ST", "LW"]), p("Dmitri Alenichev", 81, ["AM", "RM"])
+  ]),
+  team(2953, "Ajax", "1994/95", "Campeon joven de Van Gaal", 92, [
+    p("Edwin van der Sar", 89, ["GK"]), p("Michael Reiziger", 85, ["RB"]), p("Frank Rijkaard", 91, ["CB", "DM"]), p("Frank de Boer", 90, ["CB", "LB"]),
+    p("Danny Blind", 87, ["CB", "LB"]), p("Edgar Davids", 89, ["CM", "DM"]), p("Clarence Seedorf", 88, ["CM", "AM"]), p("Jari Litmanen", 92, ["AM", "ST"]),
+    p("Finidi George", 86, ["RW", "RM"]), p("Patrick Kluivert", 87, ["ST"]), p("Marc Overmars", 88, ["LW", "LM"]), p("Nwankwo Kanu", 84, ["ST"])
+  ]),
+  team(2829, "Real Madrid", "2001/02", "Golazo de Zidane en Glasgow", 93, [
+    p("Iker Casillas", 88, ["GK"]), p("Michel Salgado", 85, ["RB"]), p("Fernando Hierro", 88, ["CB"]), p("Ivan Helguera", 85, ["CB", "DM"]),
+    p("Roberto Carlos", 93, ["LB", "LM"]), p("Claude Makelele", 89, ["DM", "CM"]), p("Luis Figo", 93, ["RW", "RM"]), p("Zinedine Zidane", 96, ["AM", "CM"]),
+    p("Santiago Solari", 84, ["LM", "CM"]), p("Raul", 92, ["ST", "AM"]), p("Fernando Morientes", 87, ["ST"]), p("Guti", 84, ["AM", "CM"])
+  ]),
+  team(2672, "Bayern", "2000/01", "Campeon por penales en Milan", 90, [
+    p("Oliver Kahn", 94, ["GK"]), p("Willy Sagnol", 84, ["RB"]), p("Samuel Kuffour", 86, ["CB"]), p("Thomas Linke", 84, ["CB"]),
+    p("Bixente Lizarazu", 87, ["LB"]), p("Owen Hargreaves", 83, ["DM", "CM"]), p("Stefan Effenberg", 90, ["CM", "DM"]), p("Mehmet Scholl", 88, ["AM", "LM"]),
+    p("Hasan Salihamidzic", 84, ["RM", "RB"]), p("Giovane Elber", 88, ["ST"]), p("Carsten Jancker", 82, ["ST"]), p("Paulo Sergio", 82, ["ST", "LW"])
+  ]),
+  team(2817, "Barcelona", "2010/11", "Final de Wembley", 97, [
+    p("Victor Valdes", 88, ["GK"]), p("Dani Alves", 92, ["RB", "RM"]), p("Gerard Pique", 91, ["CB"]), p("Carles Puyol", 90, ["CB", "RB"]),
+    p("Eric Abidal", 87, ["LB", "CB"]), p("Sergio Busquets", 92, ["DM", "CM"]), p("Xavi", 97, ["CM"]), p("Andres Iniesta", 96, ["CM", "AM"]),
+    p("Lionel Messi", 99, ["ST", "RW", "AM"]), p("David Villa", 91, ["LW", "ST"]), p("Pedro", 87, ["RW", "LW"]), p("Javier Mascherano", 84, ["CB", "DM"])
+  ]),
+  team(44, "Liverpool", "2021/22", "Finalista de Paris", 92, [
+    p("Alisson", 92, ["GK"]), p("Trent Alexander-Arnold", 90, ["RB", "RM"]), p("Ibrahima Konate", 85, ["CB"]), p("Virgil van Dijk", 94, ["CB"]),
+    p("Andy Robertson", 90, ["LB", "LM"]), p("Fabinho", 89, ["DM", "CB"]), p("Thiago Alcantara", 89, ["CM"]), p("Jordan Henderson", 84, ["CM", "RM"]),
+    p("Mohamed Salah", 94, ["RW", "ST"]), p("Sadio Mane", 91, ["LW", "ST"]), p("Luis Diaz", 86, ["LW", "RW"]), p("Diogo Jota", 85, ["ST", "LW"])
+  ]),
+  team(38, "Chelsea", "2007/08", "Finalista en Moscu", 91, [
+    p("Petr Cech", 92, ["GK"]), p("Michael Essien", 88, ["RB", "DM", "CM"]), p("Ricardo Carvalho", 89, ["CB"]), p("John Terry", 91, ["CB"]),
+    p("Ashley Cole", 90, ["LB"]), p("Claude Makelele", 87, ["DM"]), p("Frank Lampard", 92, ["CM", "AM"]), p("Michael Ballack", 89, ["CM", "AM"]),
+    p("Joe Cole", 87, ["RW", "AM"]), p("Didier Drogba", 92, ["ST"]), p("Florent Malouda", 84, ["LW", "LM"]), p("Nicolas Anelka", 84, ["ST", "RW"])
+  ]),
+  team(2673, "Dortmund", "1996/97", "Campeon contra Juventus", 88, [
+    p("Stefan Klos", 85, ["GK"]), p("Stefan Reuter", 85, ["RB"]), p("Jurgen Kohler", 90, ["CB"]), p("Matthias Sammer", 92, ["CB", "DM"]),
+    p("Jorg Heinrich", 84, ["LB", "LM"]), p("Paulo Sousa", 87, ["CM", "DM"]), p("Andreas Moller", 90, ["AM", "CM"]), p("Paul Lambert", 84, ["DM", "CM"]),
+    p("Lars Ricken", 82, ["AM", "RM"]), p("Karl-Heinz Riedle", 86, ["ST"]), p("Stephane Chapuisat", 87, ["ST"]), p("Heiko Herrlich", 82, ["ST"])
+  ]),
+  team(9885, "Juventus", "1995/96", "Campeon con Lippi", 91, [
+    p("Angelo Peruzzi", 90, ["GK"]), p("Moreno Torricelli", 84, ["RB", "LB"]), p("Ciro Ferrara", 90, ["CB"]), p("Pietro Vierchowod", 86, ["CB"]),
+    p("Gianluca Pessotto", 83, ["LB", "RB", "LM"]), p("Didier Deschamps", 89, ["DM", "CM"]), p("Paulo Sousa", 88, ["CM", "DM"]), p("Antonio Conte", 87, ["CM", "RM", "DM"]),
+    p("Vladimir Jugovic", 88, ["CM", "RM", "AM"]), p("Alessandro Del Piero", 93, ["ST", "LW", "AM"]), p("Gianluca Vialli", 91, ["ST"]), p("Fabrizio Ravanelli", 88, ["ST", "LW"])
+  ]),
+  team(9885, "Juventus", "2002/03", "Finalista en Old Trafford", 92, [
+    p("Gianluigi Buffon", 94, ["GK"]), p("Lilian Thuram", 91, ["RB", "CB"]), p("Ciro Ferrara", 87, ["CB"]), p("Paolo Montero", 86, ["CB"]),
+    p("Gianluca Zambrotta", 90, ["LB", "LM", "RB", "RM"]), p("Alessandro Birindelli", 80, ["LB", "RB"]), p("Alessio Tacchinardi", 85, ["DM", "CM"]), p("Edgar Davids", 91, ["CM", "DM"]),
+    p("Mauro Camoranesi", 87, ["RM", "RW", "CM"]), p("Pavel Nedved", 94, ["AM", "LM", "CM"]), p("Alessandro Del Piero", 92, ["ST", "AM"]), p("David Trezeguet", 90, ["ST"])
+  ]),
+  team(33, "Tottenham", "2018/19", "Finalista de Pochettino", 86, [
+    p("Hugo Lloris", 88, ["GK"]), p("Kieran Trippier", 82, ["RB", "RM"]), p("Toby Alderweireld", 88, ["CB"]), p("Jan Vertonghen", 87, ["CB", "LB"]),
+    p("Danny Rose", 81, ["LB", "LM"]), p("Moussa Sissoko", 84, ["CM", "RM", "DM"]), p("Harry Winks", 80, ["CM", "DM"]), p("Christian Eriksen", 89, ["AM", "CM", "RM"]),
+    p("Dele Alli", 85, ["AM", "CM"]), p("Son Heung-min", 90, ["LW", "ST", "RW"]), p("Harry Kane", 92, ["ST"]), p("Lucas Moura", 84, ["RW", "ST", "LW"])
+  ]),
+  team(3321, "Leverkusen", "2001/02", "Finalista del Neverkusen", 88, [
+    p("Hans-Jorg Butt", 84, ["GK"]), p("Zoltan Sebescen", 79, ["RB"]), p("Lucio", 91, ["CB"]), p("Jens Nowotny", 88, ["CB"]),
+    p("Diego Placente", 83, ["LB"]), p("Carsten Ramelow", 86, ["DM", "CB"]), p("Michael Ballack", 93, ["CM", "AM"]), p("Bernd Schneider", 88, ["RM", "CM", "AM"]),
+    p("Yildiray Basturk", 86, ["AM", "CM"]), p("Ze Roberto", 89, ["LM", "LW", "LB"]), p("Oliver Neuville", 86, ["ST", "RW"]), p("Dimitar Berbatov", 82, ["ST"])
+  ]),
+  team(2699, "Lazio", "1999/00", "Campeon italiano y potencia europea", 89, [
+    p("Luca Marchegiani", 86, ["GK"]), p("Paolo Negro", 83, ["RB", "CB"]), p("Alessandro Nesta", 94, ["CB"]), p("Sinisa Mihajlovic", 88, ["CB", "LB"]),
+    p("Giuseppe Pancaro", 83, ["LB"]), p("Diego Simeone", 88, ["DM", "CM"]), p("Matias Almeyda", 87, ["DM", "CM"]), p("Juan Sebastian Veron", 93, ["CM", "AM"]),
+    p("Pavel Nedved", 91, ["LM", "AM", "CM"]), p("Sergio Conceicao", 86, ["RM", "RW"]), p("Marcelo Salas", 89, ["ST"]), p("Simone Inzaghi", 83, ["ST"])
+  ]),
   team(35, "Man United", "2007/08", "Campeon en Moscu", 94, [
     p("Edwin van der Sar", 91, ["GK"]), p("Wes Brown", 82, ["RB", "CB"]), p("Rio Ferdinand", 92, ["CB"]), p("Nemanja Vidic", 92, ["CB"]),
     p("Patrice Evra", 90, ["LB", "LM"]), p("Michael Carrick", 87, ["DM", "CM"]), p("Paul Scholes", 89, ["CM"]), p("Owen Hargreaves", 86, ["CM", "RM"]),
@@ -382,6 +508,7 @@ const i18n = {
     yourXI: "Tu XI",
     versus: "vs",
     goalBy: "Gol de {scorer}",
+    ownGoalBy: "Gol en contra de {scorer}",
     finalWhistle: "Final: {team} {userGoals} - {rivalGoals} {opponent}",
     penalties: "Penales",
     penaltiesResult: "Penales: {team} {user} - {rival} {opponent}",
@@ -472,12 +599,90 @@ const i18n = {
     dataLi2: "Specific positions: GK, CB, LB, RB, DM, CM, AM, LM, RM, LW, RW, ST.",
     dataLi3: "Animated matches with scorers and penalties for tied knockout games.",
     choosePosition: "Choose position",
-    close: "Close"
+    close: "Close",
+    ownGoalBy: "Own goal by {scorer}"
+  },
+  pt: {
+    subtitle: "Draft historico da Champions",
+    preGame: "Antes de comecar",
+    chooseFormation: "Escolha sua formacao",
+    startDraft: "Comecar draft",
+    squad: "Seu elenco",
+    xi: "XI titular",
+    round: "Rodada",
+    players: "Jogadores",
+    avg: "Media",
+    playChampions: "Jogar Champions",
+    restart: "Reiniciar",
+    rolledTeam: "Time sorteado",
+    choosePlayer: "Escolha um jogador",
+    otherTeam: "Outro time",
+    changes: "Trocas extras",
+    throw: "Sortear",
+    waitingThrow: "Toque em Sortear para revelar um time.",
+    simulation: "Simulacao",
+    road: "Caminho ate a taca",
+    back: "Voltar",
+    data: "Dados",
+    normal: "Normal",
+    hard: "Dificil",
+    fast: "Rapido",
+    startMatches: "Comecar partidas",
+    champion: "Campeao",
+    eliminated: "Eliminado",
+    won: "Voce ganhou a Champions",
+    lostGroups: "Voce perdeu na fase de grupos",
+    lostAgainst: "Voce perdeu contra",
+    playAgain: "Jogar de novo",
+    attackAvg: "Media ataque",
+    defenseAvg: "Media defesa",
+    wins: "Vitorias",
+    draws: "Empates",
+    losses: "Derrotas",
+    goalsFor: "Gols a favor",
+    goalsAgainst: "Gols contra",
+    setupState: "Previa",
+    finalState: "Final",
+    draftState: "Draft",
+    preMatchEmpty: "Complete seu XI para jogar a Champions.",
+    setupTeamNote: "Um time aleatorio aparece quando o jogo comeca.",
+    teamPower: "{season} · {power} media",
+    teamNoteGeneric: "Elenco de Champions {season}",
+    pointsShort: "pts",
+    canPlay: "pode jogar",
+    manualHelp: "Normal pausa entre partidas. Toque no botao para jogar a proxima.",
+    fastHelp: "Rapido joga todas as partidas seguidas com a mesma animacao de gols.",
+    groupMatch: "Grupo partida {n}",
+    playGroup: "Jogar grupo {n}",
+    roundOf16: "Oitavas",
+    quarterfinal: "Quartas",
+    semifinal: "Semifinal",
+    finalRound: "Final",
+    playRound: "Jogar {round}",
+    yourXI: "Seu XI",
+    versus: "vs",
+    goalBy: "Gol de {scorer}",
+    ownGoalBy: "Gol contra de {scorer}",
+    finalWhistle: "Fim de jogo: {team} {userGoals} - {rivalGoals} {opponent}",
+    penalties: "Penaltis",
+    penaltiesResult: "Penaltis: {team} {user} - {rival} {opponent}",
+    penaltyShort: "pen",
+    scored: "Gol",
+    missed: "Errou",
+    qualified: "Classificado: {points} pontos ({wins}V, {draws}E)",
+    eliminatedGroupsVerdict: "Eliminado nos grupos: {points} pontos ({wins}V, {draws}E)",
+    dataTitle: "Dados usados",
+    dataBody: "Dataset local inspirado em temporadas da UEFA Champions League e paginas publicas do SofaScore. Inclui campeoes, finalistas e clubes de nivel menor para que o draft tenha risco.",
+    dataLi1: "Elencos historicos com notas aproximadas daquele momento.",
+    dataLi2: "Posicoes especificas: GOL, ZAG, LE, LD, VOL, MC, MEI, ME, MD, PE, PD, CA.",
+    dataLi3: "Partidas com animacao, artilheiros e penaltis em mata-matas empatados.",
+    choosePosition: "Escolher posicao",
+    close: "Fechar"
   }
 };
 
 function tr(key) {
-  return i18n[state.lang][key] || i18n.es[key] || key;
+  return i18n[state.lang]?.[key] || i18n.es[key] || key;
 }
 
 function fmt(key, values = {}) {
@@ -485,6 +690,7 @@ function fmt(key, values = {}) {
 }
 
 function posLabel(position) {
+  if (state.lang === "pt") return POS_PT[position];
   return state.lang === "en" ? POS_EN[position] : POS[position];
 }
 
@@ -514,44 +720,50 @@ function configureTeamPool() {
     const index = teamPool.findIndex((item) => teamKey(item) === key);
     if (index >= 0) teamPool.splice(index, 1);
   });
+  const seen = new Set();
+  for (let index = teamPool.length - 1; index >= 0; index -= 1) {
+    const key = teamKey(teamPool[index]);
+    if (seen.has(key)) teamPool.splice(index, 1);
+    seen.add(key);
+  }
   addBenchPlayers();
 }
 
 function addBenchPlayers() {
   const benches = {
-    Barcelona: [p("Claudio Bravo", 84, ["GK"]), p("Rafinha", 80, ["CM", "AM"])],
-    "Real Madrid": [p("Pepe", 86, ["CB"]), p("Lucas Vazquez", 80, ["RW", "RM"])],
-    Inter: [p("Thiago Motta", 84, ["DM", "CM"]), p("Davide Santon", 78, ["LB", "RB"])],
-    Liverpool: [p("Joe Gomez", 82, ["CB", "RB"]), p("Naby Keita", 80, ["CM"])],
-    "Man City": [p("Riyad Mahrez", 87, ["RW"]), p("Manuel Akanji", 82, ["CB", "RB"])],
-    Bayern: [p("Philippe Coutinho", 86, ["AM", "LW"]), p("Benjamin Pavard", 82, ["RB", "CB"])],
-    PSG: [p("Pablo Sarabia", 80, ["RW", "AM"]), p("Idrissa Gueye", 81, ["DM", "CM"])],
-    Dortmund: [p("Nuri Sahin", 82, ["CM", "DM"]), p("Felipe Santana", 78, ["CB"])],
-    Chelsea: [p("Gary Cahill", 82, ["CB"]), p("Salomon Kalou", 79, ["LW", "ST"])],
-    Benfica: [p("Fredrik Aursnes", 80, ["CM", "LM"]), p("Petar Musa", 76, ["ST"])],
-    Ajax: [p("Joel Veltman", 80, ["CB", "RB"]), p("Kasper Dolberg", 79, ["ST"])],
-    Porto: [p("Oliver Torres", 78, ["CM", "AM"]), p("Yacine Brahimi", 81, ["LW", "AM"])],
-    Roma: [p("Diego Perotti", 80, ["LW", "AM"]), p("Lorenzo Pellegrini", 80, ["CM", "AM"])],
-    Lyon: [p("Lucas Tousart", 78, ["DM", "CM"]), p("Bertrand Traore", 78, ["RW", "ST"])],
-    Shakhtar: [p("Alex Teixeira", 80, ["AM", "LW"]), p("Eduardo", 78, ["ST"])],
-    "Atletico Madrid": [p("Stefan Savic", 80, ["CB"]), p("Oliver Torres", 78, ["CM", "AM"])],
-    Olympiacos: [p("Daniel Podence", 78, ["LW", "RW"]), p("Andreas Bouchalakis", 76, ["CM", "DM"])],
-    "Club Brugge": [p("Krepin Diatta", 77, ["RW", "RM"]), p("Eder Balanta", 75, ["DM", "CB"])],
-    Qarabag: [p("Afran Ismayilov", 68, ["RW", "AM"]), p("Donald Guerrier", 69, ["LB", "LM"])],
-    PSV: [p("Guus Til", 78, ["AM", "CM"]), p("Andre Ramalho", 76, ["CB"])],
-    "Union SG": [p("Gustaf Nilsson", 72, ["ST"]), p("Loic Lapoussin", 72, ["LM", "LW"])],
-    Kobenhavn: [p("Viktor Claesson", 75, ["AM", "ST"]), p("Rasmus Falk", 74, ["CM", "RM"])],
-    Galatasaray: [p("Kerem Akturkoglu", 80, ["LW", "RW"]), p("Kaan Ayhan", 77, ["CB", "RB"])],
-    Monaco: [p("Joao Moutinho", 84, ["CM"]), p("Valere Germain", 79, ["ST"])],
-    Atalanta: [p("Mario Pasalic", 79, ["CM", "AM"]), p("Luis Muriel", 82, ["ST"])],
-    Villarreal: [p("Yeremy Pino", 80, ["RW", "LW"]), p("Samuel Chukwueze", 79, ["RW"])],
-    "Man United": [p("Darren Fletcher", 83, ["CM", "RM"]), p("Park Ji-sung", 84, ["LM", "RM", "CM"])],
-    Milan: [p("Cafu", 83, ["RB"]), p("Serginho", 80, ["LM", "LB"])],
-    Arsenal: [p("Mathieu Flamini", 80, ["DM", "CM", "LB"]), p("Robin van Persie", 83, ["ST", "RW"])],
-    Napoli: [p("Giovanni Simeone", 79, ["ST"]), p("Eljif Elmas", 79, ["CM", "AM", "LW"])]
+    "Barcelona-2014/15": [p("Claudio Bravo", 84, ["GK"]), p("Rafinha", 80, ["CM", "AM"])],
+    "Real Madrid-2016/17": [p("Pepe", 86, ["CB"]), p("Lucas Vazquez", 80, ["RW", "RM"])],
+    "Inter-2009/10": [p("Thiago Motta", 84, ["DM", "CM"]), p("Davide Santon", 78, ["LB", "RB"])],
+    "Liverpool-2018/19": [p("Joe Gomez", 82, ["CB", "RB"]), p("Naby Keita", 80, ["CM"])],
+    "Man City-2022/23": [p("Riyad Mahrez", 87, ["RW"]), p("Manuel Akanji", 82, ["CB", "RB"])],
+    "Bayern-2019/20": [p("Philippe Coutinho", 86, ["AM", "LW"]), p("Benjamin Pavard", 82, ["RB", "CB"])],
+    "PSG-2019/20": [p("Pablo Sarabia", 80, ["RW", "AM"]), p("Idrissa Gueye", 81, ["DM", "CM"])],
+    "Dortmund-2012/13": [p("Nuri Sahin", 82, ["CM", "DM"]), p("Felipe Santana", 78, ["CB"])],
+    "Chelsea-2011/12": [p("Gary Cahill", 82, ["CB"]), p("Salomon Kalou", 79, ["LW", "ST"])],
+    "Benfica-2022/23": [p("Fredrik Aursnes", 80, ["CM", "LM"]), p("Petar Musa", 76, ["ST"])],
+    "Ajax-2018/19": [p("Joel Veltman", 80, ["CB", "RB"]), p("Kasper Dolberg", 79, ["ST"])],
+    "Porto-2018/19": [p("Oliver Torres", 78, ["CM", "AM"]), p("Yacine Brahimi", 81, ["LW", "AM"])],
+    "Roma-2017/18": [p("Diego Perotti", 80, ["LW", "AM"]), p("Lorenzo Pellegrini", 80, ["CM", "AM"])],
+    "Lyon-2019/20": [p("Lucas Tousart", 78, ["DM", "CM"]), p("Bertrand Traore", 78, ["RW", "ST"])],
+    "Shakhtar-2010/11": [p("Alex Teixeira", 80, ["AM", "LW"]), p("Eduardo", 78, ["ST"])],
+    "Atletico Madrid-2015/16": [p("Stefan Savic", 80, ["CB"]), p("Oliver Torres", 78, ["CM", "AM"])],
+    "Olympiacos-2019/20": [p("Daniel Podence", 78, ["LW", "RW"]), p("Andreas Bouchalakis", 76, ["CM", "DM"])],
+    "Club Brugge-2021/22": [p("Kamal Sowah", 75, ["RW", "LW"]), p("Eder Balanta", 75, ["DM", "CB"])],
+    "Qarabag-2017/18": [p("Afran Ismayilov", 68, ["RW", "AM"]), p("Donald Guerrier", 69, ["LB", "LM"])],
+    "PSV-2023/24": [p("Guus Til", 78, ["AM", "CM"]), p("Andre Ramalho", 76, ["CB"])],
+    "Union SG-2025/26": [p("Promise David", 73, ["ST"]), p("Loic Lapoussin", 72, ["LM", "LW"])],
+    "Kobenhavn-2023/24": [p("Viktor Claesson", 75, ["AM", "ST"]), p("Rasmus Falk", 74, ["CM", "RM"])],
+    "Galatasaray-2023/24": [p("Kerem Akturkoglu", 80, ["LW", "RW"]), p("Kaan Ayhan", 77, ["CB", "RB"])],
+    "Monaco-2016/17": [p("Joao Moutinho", 84, ["CM"]), p("Valere Germain", 79, ["ST"])],
+    "Atalanta-2019/20": [p("Mario Pasalic", 79, ["CM", "AM"]), p("Luis Muriel", 82, ["ST"])],
+    "Villarreal-2021/22": [p("Yeremy Pino", 80, ["RW", "LW"]), p("Samuel Chukwueze", 79, ["RW"])],
+    "Man United-2007/08": [p("Darren Fletcher", 83, ["CM", "RM"]), p("Park Ji-sung", 84, ["LM", "RM", "CM"])],
+    "Milan-2006/07": [p("Cafu", 83, ["RB"]), p("Serginho", 80, ["LM", "LB"])],
+    "Arsenal-2005/06": [p("Mathieu Flamini", 80, ["DM", "CM", "LB"]), p("Robin van Persie", 83, ["ST", "RW"])],
+    "Napoli-2022/23": [p("Giovanni Simeone", 79, ["ST"]), p("Eljif Elmas", 79, ["CM", "AM", "LW"])]
   };
   teamPool.forEach((item) => {
-    (benches[item.name] || []).forEach((player) => {
+    (benches[teamKey(item)] || []).forEach((player) => {
       if (!item.roster.some((existing) => existing.name === player.name)) item.roster.push(player);
     });
   });
@@ -574,8 +786,11 @@ const crestFiles = {
   "Dortmund": "BVB-Logo-500x423.png",
   "Galatasaray": "Galatasaray-logo-500x281.png",
   "Inter": "Inter-Milan-logo-500x281.png",
+  "Juventus": "juventus.png",
   "Kobenhavn": "Kobenhavn-logo-500x313.png",
+  "Lazio": "lazio.png",
   "Leeds": "leeds.png",
+  "Leverkusen": "leverkusen.png",
   "Liverpool": "Logo-Liverpool-500x313.png",
   "Lyon": "Olympique-Lyonnais-logo-500x281.png",
   "Man City": "Manchester-City-Logo-500x313.png",
@@ -604,6 +819,10 @@ function crestUrl(teamItem) {
   const name = typeof teamItem === "string" ? teamItem : teamItem?.name;
   const file = crestFiles[name];
   if (file) return encodeURI(`assets/crests/${file}`);
+  return fallbackCrest(name);
+}
+
+function fallbackCrest(name) {
   const initials = (name || "FC").split(/\s+/).map((part) => part[0]).join("").slice(0, 3).toUpperCase();
   return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" rx="14" fill="#071b47"/><text x="40" y="48" text-anchor="middle" font-size="24" font-family="Arial" font-weight="700" fill="#d7b56d">${initials}</text></svg>`)}`;
 }
@@ -622,6 +841,11 @@ function init() {
 }
 
 function bindEvents() {
+  document.addEventListener("error", (event) => {
+    if (event.target?.tagName !== "IMG" || event.target.dataset.fallbackApplied) return;
+    event.target.dataset.fallbackApplied = "true";
+    event.target.src = fallbackCrest(event.target.alt || "FC");
+  }, true);
   document.querySelector("#startGame").addEventListener("click", startGame);
   document.querySelector("#newRun").addEventListener("click", resetToSetup);
   document.querySelector("#clearTeam").addEventListener("click", resetToSetup);
@@ -839,7 +1063,7 @@ function animateTeamRoulette(finalTeam) {
     const interval = setInterval(() => {
       ticks += 1;
       const teamItem = ticks >= maxTicks ? finalTeam : source[(ticks + Math.floor(Math.random() * source.length)) % source.length];
-      track.innerHTML = `<div><img src="${crestUrl(teamItem)}" alt=""><span>${teamItem.name}</span><strong>${teamItem.season}</strong></div>`;
+      track.innerHTML = `<div><img src="${crestUrl(teamItem)}" alt="${teamItem.name}"><span>${teamItem.name}</span><strong>${teamItem.season}</strong></div>`;
       if (ticks >= maxTicks) {
         clearInterval(interval);
         setTimeout(() => {
@@ -928,7 +1152,7 @@ function renderCurrentTeam() {
   document.querySelector("#teamCrest").classList.remove("hidden");
   document.querySelector("#teamCrest").alt = `${teamItem.name} ${teamItem.season}`;
   document.querySelector("#teamEra").textContent = fmt("teamPower", { season: teamItem.season, power: teamItem.power });
-  document.querySelector("#teamName").innerHTML = `<img src="${crestUrl(teamItem)}" alt=""> <span>${teamItem.name}</span>`;
+  document.querySelector("#teamName").innerHTML = `<img src="${crestUrl(teamItem)}" alt="${teamItem.name}"> <span>${teamItem.name}</span>`;
   document.querySelector("#teamNote").textContent = localizedTeamNote(teamItem);
   teamItem.roster
     .slice()
@@ -1069,7 +1293,7 @@ async function playTournament() {
   document.querySelector("#championsStart").classList.add("hidden");
   state.simRunning = true;
   renderMeta();
-  const userPower = averageRating() - 1;
+  const userPower = averageRating();
   const opponents = weightedOpponents();
   const log = [];
   const groupResults = [];
@@ -1113,16 +1337,29 @@ async function playTournament() {
 }
 
 function weightedOpponents() {
-  const strong = teamPool.filter((teamItem) => teamItem.power >= 78);
-  return [...strong, ...teamPool.filter((teamItem) => teamItem.power >= 88)]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 7);
+  const used = new Set();
+  const draw = (min, max) => {
+    const candidates = shuffle(teamPool.filter((teamItem) => teamItem.power >= min && teamItem.power <= max && !used.has(teamKey(teamItem))));
+    const fallback = shuffle(teamPool.filter((teamItem) => !used.has(teamKey(teamItem))));
+    const picked = candidates[0] || fallback[0];
+    used.add(teamKey(picked));
+    return picked;
+  };
+  return [
+    draw(72, 88),
+    draw(74, 90),
+    draw(76, 91),
+    draw(84, 94),
+    draw(88, 96),
+    draw(91, 98),
+    draw(93, 99)
+  ];
 }
 
 async function playMatch(round, userPower) {
   const stage = document.querySelector("#matchStage");
   const opponent = round.opponent;
-  const events = createEvents(userPower, opponent.power);
+  const events = createEvents(userPower, opponent);
   let userGoals = 0;
   let rivalGoals = 0;
   let currentMinute = 0;
@@ -1145,11 +1382,11 @@ async function playMatch(round, userPower) {
   });
   for (const event of events) {
     currentMinute = await tickToMinute(event.minute, { currentMinute, minuteEl, fillEl });
-    if (event.side === "user") userGoals += 1;
-    if (event.side === "rival") rivalGoals += 1;
+    if (event.side === "user" || event.side === "rivalOwnGoal") userGoals += 1;
+    if (event.side === "rival" || event.side === "userOwnGoal") rivalGoals += 1;
     liveUserEl.textContent = userGoals;
     liveRivalEl.textContent = rivalGoals;
-    addTimeline(`${event.minute}' ${fmt("goalBy", { scorer: event.side === "user" ? event.scorer : opponent.name })}`, timelineEl);
+    addTimeline(`${event.minute}' ${fmt(event.ownGoal ? "ownGoalBy" : "goalBy", { scorer: event.scorer })}`, timelineEl);
   }
   currentMinute = await tickToMinute(90, { currentMinute, minuteEl, fillEl });
   liveUserEl.textContent = userGoals;
@@ -1176,16 +1413,24 @@ async function tickToMinute(targetMinute, refs) {
   return minute;
 }
 
-function createEvents(userPower, rivalPower) {
-  const userExpected = Math.max(0.35, 1.05 + (userPower - rivalPower) / 24);
-  const rivalExpected = Math.max(0.35, 1.12 + (rivalPower - userPower) / 21);
+function createEvents(userPower, opponent) {
+  const rivalPower = opponent.power;
+  const diff = userPower - rivalPower;
+  const userExpected = clamp(0.25, 3.2, 1.18 + diff / 10);
+  const rivalExpected = clamp(0.25, 3.2, 1.05 - diff / 11);
   const shock = shockScore(userPower, rivalPower);
   const userGoals = shock ? shock.user : sampleGoals(userExpected);
   const rivalGoals = shock ? shock.rival : sampleGoals(rivalExpected);
   const events = [];
   for (let i = 0; i < userGoals; i += 1) events.push({ side: "user", minute: randomMinute(), scorer: randomScorer() });
-  for (let i = 0; i < rivalGoals; i += 1) events.push({ side: "rival", minute: randomMinute() });
+  for (let i = 0; i < rivalGoals; i += 1) events.push({ side: "rival", minute: randomMinute(), scorer: randomOpponentScorer(opponent) });
+  if (Math.random() < 0.016) events.push({ side: "rivalOwnGoal", minute: randomMinute(), scorer: randomOpponentDefender(opponent), ownGoal: true });
+  if (Math.random() < 0.014) events.push({ side: "userOwnGoal", minute: randomMinute(), scorer: randomUserDefender(), ownGoal: true });
   return events.sort((a, b) => a.minute - b.minute);
+}
+
+function clamp(min, max, value) {
+  return Math.max(min, Math.min(max, value));
 }
 
 function shockScore(userPower, rivalPower) {
@@ -1356,8 +1601,33 @@ function randomScorer() {
   return pool[Math.floor(Math.random() * pool.length)].name;
 }
 
+function randomOpponentScorer(opponent) {
+  const attackers = opponent.roster.filter((player) => player.positions.some((position) => ["ST", "LW", "RW", "AM", "LM", "RM"].includes(position)));
+  const pool = attackers.length ? attackers : opponent.roster;
+  return pool[Math.floor(Math.random() * pool.length)].name;
+}
+
+function randomOpponentDefender(opponent) {
+  const defenders = opponent.roster.filter((player) => player.positions.some((position) => ["GK", "CB", "LB", "RB", "DM"].includes(position)));
+  const pool = defenders.length ? defenders : opponent.roster;
+  return pool[Math.floor(Math.random() * pool.length)].name;
+}
+
+function randomUserDefender() {
+  const defenders = selectedPlayers().filter((player) => ["GK", "CB", "LB", "RB", "DM"].includes(player.chosenPosition));
+  const pool = defenders.length ? defenders : selectedPlayers();
+  return pool[Math.floor(Math.random() * pool.length)].name;
+}
+
 function randomMinute() {
   return Math.floor(4 + Math.random() * 88);
+}
+
+function shuffle(items) {
+  return items
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item);
 }
 
 function wait(ms) {

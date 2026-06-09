@@ -456,6 +456,16 @@ const i18n = {
     templatesStat: "plantillas",
     playersStat: "jugadores",
     sampleLabel: "Ejemplo visual",
+    viewCard: "Ver tarjeta",
+    pickOnField: "Elegí un recuadro marcado en el campo.",
+    groupTable: "Tabla final del grupo",
+    played: "PJ",
+    goalDiff: "DG",
+    points: "Pts",
+    scorers: "Goleadores",
+    assists: "Asistidores",
+    assist: "Asistencia",
+    noStats: "Sin datos",
     preGame: "Antes de empezar",
     chooseFormation: "Elegí tu formación",
     startDraft: "Empezar draft",
@@ -539,6 +549,16 @@ const i18n = {
     templatesStat: "squads",
     playersStat: "players",
     sampleLabel: "Visual example",
+    viewCard: "View card",
+    pickOnField: "Choose a highlighted slot on the pitch.",
+    groupTable: "Final group table",
+    played: "P",
+    goalDiff: "GD",
+    points: "Pts",
+    scorers: "Scorers",
+    assists: "Assists",
+    assist: "Assist",
+    noStats: "No data",
     preGame: "Before you start",
     chooseFormation: "Choose your formation",
     startDraft: "Start draft",
@@ -622,6 +642,16 @@ const i18n = {
     templatesStat: "elencos",
     playersStat: "jogadores",
     sampleLabel: "Exemplo visual",
+    viewCard: "Ver cartao",
+    pickOnField: "Escolha um espaco marcado no campo.",
+    groupTable: "Tabela final do grupo",
+    played: "J",
+    goalDiff: "SG",
+    points: "Pts",
+    scorers: "Artilheiros",
+    assists: "Assistencias",
+    assist: "Assistencia",
+    noStats: "Sem dados",
     preGame: "Antes de comecar",
     chooseFormation: "Escolha sua formacao",
     startDraft: "Comecar draft",
@@ -780,6 +810,18 @@ function addBenchPlayers() {
     "Arsenal-2005/06": [p("Mathieu Flamini", 80, ["DM", "CM", "LB"]), p("Robin van Persie", 83, ["ST", "RW"])],
     "Napoli-2022/23": [p("Giovanni Simeone", 79, ["ST"]), p("Eljif Elmas", 79, ["CM", "AM", "LW"])]
   };
+  Object.assign(benches, {
+    "Juventus-1995/96": [p("Angelo Di Livio", 84, ["RM", "RB", "CM"]), p("Michele Padovano", 80, ["ST"])],
+    "Juventus-2002/03": [p("Marco Di Vaio", 83, ["ST", "LW"]), p("Antonio Conte", 82, ["CM", "DM"])],
+    "Tottenham-2018/19": [p("Eric Dier", 82, ["DM", "CB"]), p("Erik Lamela", 81, ["RW", "AM"])],
+    "Leverkusen-2001/02": [p("Ulf Kirsten", 83, ["ST"]), p("Thomas Brdaric", 78, ["ST", "LW"])],
+    "Lazio-1999/00": [p("Alen Boksic", 84, ["ST"]), p("Roberto Mancini", 82, ["ST", "AM"])],
+    "Barcelona-2010/11": [p("Seydou Keita", 82, ["CM", "DM", "LM"]), p("Bojan Krkic", 78, ["ST", "LW"])],
+    "Real Madrid-2001/02": [p("Steve McManaman", 82, ["RM", "CM", "AM"]), p("Flavio Conceicao", 81, ["DM", "CM"])],
+    "Bayern-2000/01": [p("Alexander Zickler", 80, ["ST", "RW"]), p("Patrik Andersson", 83, ["CB"])],
+    "Liverpool-2021/22": [p("Roberto Firmino", 85, ["ST", "AM"]), p("Naby Keita", 80, ["CM"])],
+    "Chelsea-2007/08": [p("Salomon Kalou", 80, ["LW", "ST"]), p("Juliano Belletti", 80, ["RB", "CM"])]
+  });
   teamPool.forEach((item) => {
     (benches[teamKey(item)] || []).forEach((player) => {
       if (!item.roster.some((existing) => existing.name === player.name)) item.roster.push(player);
@@ -902,6 +944,8 @@ function applyLanguage() {
   document.querySelector("#setupKicker").textContent = tr("setupKicker");
   document.querySelector("#setupTitle").textContent = tr("setupTitle");
   document.querySelector("#setupLead").textContent = tr("setupLead");
+  document.querySelector("#templatesCount").textContent = teamPool.length;
+  document.querySelector("#playersCount").textContent = teamPool.reduce((sum, teamItem) => sum + teamItem.roster.length, 0);
   document.querySelector("#templatesStat").textContent = tr("templatesStat");
   document.querySelector("#playersStat").textContent = tr("playersStat");
   document.querySelector("#sampleLabel").textContent = tr("sampleLabel");
@@ -1057,6 +1101,7 @@ function buildSlots(name) {
 function pickNextTeam(consumeRoll) {
   const next = selectNextTeam(consumeRoll);
   if (!next) return;
+  state.pendingPick = null;
   state.currentTeam = next;
   animateRoll();
 }
@@ -1087,6 +1132,9 @@ function selectNextTeam(consumeRoll) {
 
 async function rollTeam() {
   if (state.phase !== "draft" || selectedCount() >= 11 || state.rollsLeft <= 0 || state.rolling || !state.currentTeam) return;
+  state.pendingPick = null;
+  renderPitch();
+  renderCurrentTeam();
   const button = document.querySelector("#rollTeam");
   button.classList.remove("rolling-button");
   void button.offsetWidth;
@@ -1104,6 +1152,7 @@ async function rollTeam() {
 
 async function throwTeam() {
   if (state.phase !== "draft" || selectedCount() >= 11 || state.rolling || !state.needsThrow) return;
+  state.pendingPick = null;
   state.rolling = true;
   renderMeta();
   const next = selectNextTeam(false);
@@ -1168,7 +1217,9 @@ function renderMeta() {
   document.querySelector("#ratingLabel").textContent = ratingLabel(averageRating());
   document.querySelector("#rollsLabel").textContent = state.rollsLeft;
   document.querySelector("#simulate").disabled = selectedCount() !== 11 || state.simRunning;
-  document.querySelector("#rollTeam").disabled = state.phase !== "draft" || state.rollsLeft <= 0 || selectedCount() >= 11 || state.rolling || !state.currentTeam;
+  document.querySelector("#rollTeam").classList.toggle("hidden", state.difficulty === "hard");
+  document.querySelector(".roll-meter").classList.toggle("hidden", state.difficulty === "hard");
+  document.querySelector("#rollTeam").disabled = state.difficulty === "hard" || state.phase !== "draft" || state.rollsLeft <= 0 || selectedCount() >= 11 || state.rolling || !state.currentTeam;
   document.querySelector("#rollTeam span").textContent = `${tr("otherTeam")} (${state.rollsLeft})`;
   document.querySelector("#throwTeam").disabled = state.phase !== "draft" || selectedCount() >= 11 || state.rolling || !state.needsThrow;
   document.querySelector("#startTournament").disabled = state.simRunning || selectedCount() !== 11;
@@ -1195,10 +1246,13 @@ function renderPitch() {
     line.forEach((position, lineSlot) => {
       const slot = state.slots.find((item) => item.lineIndex === lineIndex && item.position === position && item.id.includes(`-${lineSlot}-`));
       const card = document.createElement("div");
-      card.className = `slot ${slot?.player ? "" : "empty"}`;
+      const selectable = slot && state.pendingPick && eligibleSlotsFor(state.pendingPick.player).some((choice) => choice.id === slot.id);
+      card.className = `slot ${slot?.player ? "" : "empty"} ${selectable ? "selectable pending-target" : ""}`;
+      if (slot) card.dataset.slotId = slot.id;
       card.innerHTML = slot?.player
-        ? `<strong>${slot.player.name}</strong><span>${posLabel(slot.position)} · ${slot.player.team}</span><b>${ratingLabel(slot.player.rating)}</b>`
+        ? `<strong>${shortPlayerName(slot.player.name)}</strong><span>${posLabel(slot.position)}</span><b>${ratingLabel(slot.player.rating)}</b>`
         : `<span>${posLabel(position)}</span>`;
+      if (selectable) card.addEventListener("click", () => chooseSlot(slot.id));
       row.append(card);
     });
     root.append(row);
@@ -1229,7 +1283,8 @@ function renderCurrentTeam() {
     .forEach((player) => {
       const choices = eligibleSlotsFor(player);
       const card = document.createElement("button");
-      card.className = `player-card ${choices.length ? "" : "blocked"}`;
+      const isPending = state.pendingPick?.player.name === player.name && state.pendingPick?.teamItem.id === teamItem.id;
+      card.className = `player-card ${choices.length ? "" : "blocked"} ${isPending ? "selected" : ""}`;
       card.disabled = !choices.length || state.phase !== "draft";
       card.innerHTML = `
         <span>
@@ -1244,12 +1299,7 @@ function renderCurrentTeam() {
 }
 
 function renderNeeds() {
-  const needed = {};
-  state.slots.filter((slot) => !slot.player).forEach((slot) => {
-    needed[slot.position] = (needed[slot.position] || 0) + 1;
-  });
-  const items = state.slots.map((slot) => slot.position).filter((position, index, list) => list.indexOf(position) === index);
-  document.querySelector("#needStrip").innerHTML = items.map((position) => `<span>${posLabel(position)} ${needed[position] || 0}</span>`).join("");
+  document.querySelector("#needStrip").innerHTML = "";
 }
 
 function renderLeague() {
@@ -1260,24 +1310,20 @@ function openPositionPicker(teamItem, player) {
   const choices = eligibleSlotsFor(player);
   if (!choices.length) return;
   state.pendingPick = { teamItem, player };
-  document.querySelector("#pickTitle").textContent = player.name;
-  document.querySelector("#pickMeta").textContent = `${teamItem.name} ${teamItem.season} · ${ratingLabel(player.rating)} ${tr("pointsShort")} · ${tr("canPlay")} ${player.positions.map((position) => posLabel(position)).join(", ")}`;
-  const root = document.querySelector("#positionChoices");
-  root.innerHTML = "";
-  choices.forEach((slot) => {
-    const button = document.createElement("button");
-    button.className = "position-choice";
-    button.textContent = posLabel(slot.position);
-    button.addEventListener("click", () => chooseSlot(slot.id));
-    root.append(button);
-  });
-  document.querySelector("#positionDialog").showModal();
+  document.querySelector("#teamNote").textContent = `${player.name}: ${tr("pickOnField")}`;
+  renderPitch();
+  renderCurrentTeam();
 }
 
 function chooseSlot(slotId) {
   const slot = state.slots.find((item) => item.id === slotId);
   if (!slot || !state.pendingPick) return;
   const { teamItem, player } = state.pendingPick;
+  if (!state.currentTeam || state.currentTeam.id !== teamItem.id) {
+    state.pendingPick = null;
+    render();
+    return;
+  }
   if (isPlayerAlreadySelected(player.name)) return;
   slot.player = {
     name: player.name,
@@ -1289,7 +1335,7 @@ function chooseSlot(slotId) {
   };
   state.selected = state.slots.filter((item) => item.player).map((item) => item.player);
   state.pendingPick = null;
-  document.querySelector("#positionDialog").close();
+  if (document.querySelector("#positionDialog").open) document.querySelector("#positionDialog").close();
   state.currentTeam = null;
   state.needsThrow = selectedCount() < 11;
   render();
@@ -1324,6 +1370,12 @@ function selectedCount() {
 
 function selectedPlayers() {
   return state.slots.filter((slot) => slot.player).map((slot) => slot.player);
+}
+
+function shortPlayerName(name) {
+  const parts = name.split(/\s+/).filter(Boolean);
+  if (parts.length <= 2) return name;
+  return `${parts[0]} ${parts[parts.length - 1]}`;
 }
 
 function averageRating() {
@@ -1379,6 +1431,7 @@ async function playTournament() {
   const points = wins * 3 + draws;
   alive = points >= 4 || wins >= 2;
   addGroupVerdict(alive, wins, draws, points);
+  if (state.simMode === "manual") addGroupTable(groupResults);
   await wait(1200);
   if (alive) {
     const rounds = [
@@ -1402,7 +1455,7 @@ async function playTournament() {
   state.phase = "done";
   state.simRunning = false;
   renderMeta();
-  showFinal(alive, log);
+  renderEndReview(alive, log);
 }
 
 function weightedOpponents() {
@@ -1455,7 +1508,8 @@ async function playMatch(round, userPower) {
     if (event.side === "rival" || event.side === "userOwnGoal") rivalGoals += 1;
     liveUserEl.textContent = userGoals;
     liveRivalEl.textContent = rivalGoals;
-    addTimeline(`${event.minute}' ${fmt(event.ownGoal ? "ownGoalBy" : "goalBy", { scorer: event.scorer })}`, timelineEl);
+    const detail = event.assist ? ` (${tr("assist")}: ${event.assist})` : "";
+    addTimeline(`${event.minute}' ${fmt(event.ownGoal ? "ownGoalBy" : "goalBy", { scorer: event.scorer })}${detail}`, timelineEl, event.side === "rival" || event.side === "userOwnGoal" ? "rival-goal" : "user-goal");
   }
   currentMinute = await tickToMinute(90, { currentMinute, minuteEl, fillEl });
   liveUserEl.textContent = userGoals;
@@ -1468,7 +1522,7 @@ async function playMatch(round, userPower) {
   }
   addTimeline(fmt("finalWhistle", { team: tr("yourXI"), userGoals, rivalGoals, opponent: opponent.name }), timelineEl);
   await wait(650);
-  return { label: round.label, stage: round.stage, opponent, userGoals, rivalGoals, penalties, userWon };
+  return { label: round.label, stage: round.stage, opponent, userGoals, rivalGoals, penalties, userWon, events };
 }
 
 async function tickToMinute(targetMinute, refs) {
@@ -1491,7 +1545,10 @@ function createEvents(userPower, opponent) {
   const userGoals = shock ? shock.user : sampleGoals(userExpected);
   const rivalGoals = shock ? shock.rival : sampleGoals(rivalExpected);
   const events = [];
-  for (let i = 0; i < userGoals; i += 1) events.push({ side: "user", minute: randomMinute(), scorer: randomScorer() });
+  for (let i = 0; i < userGoals; i += 1) {
+    const scorer = randomScorer();
+    events.push({ side: "user", minute: randomMinute(), scorer, assist: randomAssister(scorer) });
+  }
   for (let i = 0; i < rivalGoals; i += 1) events.push({ side: "rival", minute: randomMinute(), scorer: randomOpponentScorer(opponent) });
   if (Math.random() < 0.016) events.push({ side: "rivalOwnGoal", minute: randomMinute(), scorer: randomOpponentDefender(opponent), ownGoal: true });
   if (Math.random() < 0.014) events.push({ side: "userOwnGoal", minute: randomMinute(), scorer: randomUserDefender(), ownGoal: true });
@@ -1578,6 +1635,71 @@ function addGroupVerdict(alive, wins, draws, points) {
   addTimeline(alive ? fmt("qualified", { points, wins, draws }) : fmt("eliminatedGroupsVerdict", { points, wins, draws }));
 }
 
+function addGroupTable(groupResults) {
+  const rivalRows = groupResults.map((item) => ({
+    name: item.opponent.name,
+    played: 1,
+    goalsFor: item.rivalGoals,
+    goalsAgainst: item.userGoals,
+    points: item.rivalGoals > item.userGoals ? 3 : item.rivalGoals === item.userGoals ? 1 : 0
+  }));
+  for (let i = 0; i < rivalRows.length; i += 1) {
+    for (let j = i + 1; j < rivalRows.length; j += 1) {
+      const aPower = groupResults[i].opponent.power;
+      const bPower = groupResults[j].opponent.power;
+      const aGoals = sampleGoals(clamp(0.35, 2.7, 1.02 + (aPower - bPower) / 18));
+      const bGoals = sampleGoals(clamp(0.35, 2.7, 1.02 + (bPower - aPower) / 18));
+      applyTableMatch(rivalRows[i], rivalRows[j], aGoals, bGoals);
+    }
+  }
+  const rows = [
+    {
+      name: tr("yourXI"),
+      played: 3,
+      goalsFor: groupResults.reduce((sum, item) => sum + item.userGoals, 0),
+      goalsAgainst: groupResults.reduce((sum, item) => sum + item.rivalGoals, 0),
+      points: groupResults.reduce((sum, item) => sum + (item.userGoals > item.rivalGoals ? 3 : item.userGoals === item.rivalGoals ? 1 : 0), 0)
+    },
+    ...rivalRows
+  ].sort((a, b) => b.points - a.points || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) || b.goalsFor - a.goalsFor);
+  const table = document.createElement("div");
+  table.className = "group-table";
+  table.innerHTML = `
+    <h4>${tr("groupTable")}</h4>
+    <table>
+      <thead><tr><th></th><th>${tr("played")}</th><th>GF</th><th>GC</th><th>${tr("goalDiff")}</th><th>${tr("points")}</th></tr></thead>
+      <tbody>
+        ${rows.map((row, index) => `<tr class="${row.name === tr("yourXI") ? "user-row" : ""}"><td>${index + 1}. ${row.name}</td><td>${row.played}</td><td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalsFor - row.goalsAgainst}</td><td>${row.points}</td></tr>`).join("")}
+      </tbody>
+    </table>
+  `;
+  document.querySelector("#timeline")?.append(table);
+}
+
+function applyTableMatch(a, b, aGoals, bGoals) {
+  a.played += 1;
+  b.played += 1;
+  a.goalsFor += aGoals;
+  a.goalsAgainst += bGoals;
+  b.goalsFor += bGoals;
+  b.goalsAgainst += aGoals;
+  if (aGoals > bGoals) a.points += 3;
+  else if (bGoals > aGoals) b.points += 3;
+  else {
+    a.points += 1;
+    b.points += 1;
+  }
+}
+
+function renderEndReview(won, log) {
+  const stage = document.querySelector("#matchStage");
+  const button = document.createElement("button");
+  button.className = `next-match-button ${won ? "gold-button" : ""}`;
+  button.textContent = tr("viewCard");
+  button.addEventListener("click", () => showFinal(won, log));
+  stage.append(button);
+}
+
 function openChampionsPage() {
   document.querySelector(".app-shell").classList.add("hidden");
   document.querySelector("#championsPage").classList.remove("hidden");
@@ -1591,9 +1713,9 @@ function backToDraft(clearHash = true) {
   if (clearHash) history.replaceState(null, "", window.location.pathname);
 }
 
-function addTimeline(text, timelineEl = document.querySelector("#timeline")) {
+function addTimeline(text, timelineEl = document.querySelector("#timeline"), type = "") {
   const item = document.createElement("div");
-  item.className = "timeline-event";
+  item.className = `timeline-event ${type}`;
   item.textContent = text;
   timelineEl.append(item);
 }
@@ -1616,19 +1738,25 @@ function showFinal(won, log) {
   const lostInGroups = !won && last?.stage === "group";
   const stats = tournamentStats(log);
   const averages = teamAverages();
+  const contribution = contributionStats(log);
   const root = document.querySelector("#resultModal");
+  root.className = `result-modal ${won ? "champion-modal" : ""}`;
   root.innerHTML = `
     <p class="eyebrow">${won ? tr("champion") : tr("eliminated")}</p>
     <h2>${won ? tr("won") : lostInGroups ? tr("lostGroups") : `${tr("lostAgainst")} ${last.opponent.name}`}</h2>
     <div class="final-stats">
-      <span>${tr("avg")} <strong>${ratingLabel(averages.overall)}</strong></span>
-      <span>${tr("attackAvg")} <strong>${ratingLabel(averages.attack)}</strong></span>
-      <span>${tr("defenseAvg")} <strong>${ratingLabel(averages.defense)}</strong></span>
+      <span>${tr("avg")} <strong>${averages.overall}</strong></span>
+      <span>${tr("attackAvg")} <strong>${averages.attack}</strong></span>
+      <span>${tr("defenseAvg")} <strong>${averages.defense}</strong></span>
       <span>${tr("wins")} <strong>${stats.wins}</strong></span>
       <span>${tr("draws")} <strong>${stats.draws}</strong></span>
       <span>${tr("losses")} <strong>${stats.losses}</strong></span>
       <span>${tr("goalsFor")} <strong>${stats.goalsFor}</strong></span>
       <span>${tr("goalsAgainst")} <strong>${stats.goalsAgainst}</strong></span>
+    </div>
+    <div class="contribution-grid">
+      ${contributionTable(tr("scorers"), contribution.scorers)}
+      ${contributionTable(tr("assists"), contribution.assists)}
     </div>
     <div class="final-pitch">${finalPitchHtml()}</div>
     <button id="playAgain" class="primary-button">${tr("playAgain")}</button>
@@ -1638,6 +1766,29 @@ function showFinal(won, log) {
     resetToSetup();
   });
   document.querySelector("#resultDialog").showModal();
+}
+
+function contributionStats(log) {
+  const scorers = {};
+  const assists = {};
+  log.flatMap((item) => item.events || []).filter((event) => event.side === "user").forEach((event) => {
+    scorers[event.scorer] = (scorers[event.scorer] || 0) + 1;
+    if (event.assist) assists[event.assist] = (assists[event.assist] || 0) + 1;
+  });
+  return { scorers: sortContribution(scorers), assists: sortContribution(assists) };
+}
+
+function sortContribution(stats) {
+  return Object.entries(stats).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+function contributionTable(title, rows) {
+  return `
+    <div class="contribution-card">
+      <h3>${title}</h3>
+      ${rows.length ? rows.slice(0, 6).map(([name, total]) => `<p><span>${name}</span><strong>${total}</strong></p>`).join("") : `<p><span>${tr("noStats")}</span><strong>0</strong></p>`}
+    </div>
+  `;
 }
 
 function tournamentStats(log) {
@@ -1658,7 +1809,7 @@ function finalPitchHtml() {
     <div class="final-line final-line-${line.length}">
       ${line.map((position, lineSlot) => {
         const slot = state.slots.find((item) => item.lineIndex === lineIndex && item.position === position && item.id.includes(`-${lineSlot}-`));
-        return `<span>${slot?.player ? `<img src="${crestUrl(slot.player.teamName)}" alt="${slot.player.teamName}">` : ""}<strong>${slot?.player?.name || posLabel(position)}</strong><em>${posLabel(position)}</em></span>`;
+        return `<span>${slot?.player ? `<img src="${crestUrl(slot.player.teamName)}" alt="${slot.player.teamName}">` : ""}<strong>${slot?.player ? shortPlayerName(slot.player.name) : posLabel(position)}</strong><em>${posLabel(position)}</em></span>`;
       }).join("")}
     </div>
   `).join("");
@@ -1667,6 +1818,14 @@ function finalPitchHtml() {
 function randomScorer() {
   const attackers = selectedPlayers().filter((player) => ["ST", "LW", "RW", "AM", "LM", "RM"].includes(player.chosenPosition));
   const pool = attackers.length ? attackers : selectedPlayers();
+  return pool[Math.floor(Math.random() * pool.length)].name;
+}
+
+function randomAssister(scorer) {
+  if (Math.random() < 0.18) return "";
+  const creators = selectedPlayers().filter((player) => player.name !== scorer && ["LW", "RW", "AM", "CM", "LM", "RM", "ST"].includes(player.chosenPosition));
+  const pool = creators.length ? creators : selectedPlayers().filter((player) => player.name !== scorer);
+  if (!pool.length) return "";
   return pool[Math.floor(Math.random() * pool.length)].name;
 }
 

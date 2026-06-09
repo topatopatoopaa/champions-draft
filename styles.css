@@ -796,6 +796,10 @@ h2 {
     #f8fbff;
 }
 
+.team-card.no-team {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .team-card.rolling {
   animation: rollFlash 0.82s ease both;
 }
@@ -876,6 +880,8 @@ h2 {
 .team-card p:last-child {
   color: var(--muted);
   font-size: 14px;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .need-strip {
@@ -1821,6 +1827,7 @@ dialog ul {
     height: 620px;
     width: min(100%, 360px);
     padding: 18px 10px;
+    scroll-margin-block: 18px;
   }
 
   .slot {
@@ -1848,6 +1855,10 @@ dialog ul {
   .market-list {
     height: auto;
     max-height: min(520px, 58vh);
+  }
+
+  .throw-button {
+    scroll-margin-block: 20px;
   }
 
   .roulette-track div {

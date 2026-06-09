@@ -1087,6 +1087,7 @@ function startGame() {
   document.querySelector(".draft-panel").classList.remove("hidden");
   document.querySelector(".app-shell").classList.add("draft-mode");
   render();
+  scrollMobileTo("#throwTeam", "center");
 }
 
 function buildSlots(name) {
@@ -1264,6 +1265,7 @@ function renderCurrentTeam() {
   const root = document.querySelector("#rosterList");
   root.innerHTML = "";
   if (!teamItem) {
+    document.querySelector("#teamCard").classList.add("no-team");
     document.querySelector("#teamName").textContent = tr("throw");
     document.querySelector("#teamEra").textContent = state.phase === "draft" ? tr("round") : tr("setupState");
     document.querySelector("#teamNote").textContent = state.phase === "draft" ? tr("waitingThrow") : tr("setupTeamNote");
@@ -1271,6 +1273,7 @@ function renderCurrentTeam() {
     document.querySelector("#teamCrest").classList.add("hidden");
     return;
   }
+  document.querySelector("#teamCard").classList.remove("no-team");
   document.querySelector("#teamCrest").src = crestUrl(teamItem);
   document.querySelector("#teamCrest").classList.remove("hidden");
   document.querySelector("#teamCrest").alt = `${teamItem.name} ${teamItem.season}`;
@@ -1302,6 +1305,21 @@ function renderNeeds() {
   document.querySelector("#needStrip").innerHTML = "";
 }
 
+function isMobileDraftView() {
+  return state.phase === "draft" && window.matchMedia("(max-width: 760px)").matches;
+}
+
+function scrollMobileTo(selector, block = "center") {
+  if (!isMobileDraftView()) return;
+  window.requestAnimationFrame(() => {
+    document.querySelector(selector)?.scrollIntoView({
+      behavior: "smooth",
+      block,
+      inline: "nearest"
+    });
+  });
+}
+
 function renderLeague() {
   document.querySelector("#bracket").dataset.ready = selectedCount() === 11 ? "true" : "false";
 }
@@ -1313,6 +1331,7 @@ function openPositionPicker(teamItem, player) {
   document.querySelector("#teamNote").textContent = `${player.name}: ${tr("pickOnField")}`;
   renderPitch();
   renderCurrentTeam();
+  scrollMobileTo("#formation", "center");
 }
 
 function chooseSlot(slotId) {
@@ -1339,6 +1358,7 @@ function chooseSlot(slotId) {
   state.currentTeam = null;
   state.needsThrow = selectedCount() < 11;
   render();
+  if (state.needsThrow) scrollMobileTo("#throwTeam", "center");
 }
 
 function eligibleSlotsFor(player) {

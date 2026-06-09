@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/topatopatoopaa/champions-draft.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/topatopatoopaa/champions-draft/issues"
+  },
+  "homepage": "https://github.com/topatopatoopaa/champions-draft#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}

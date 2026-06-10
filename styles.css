@@ -266,6 +266,10 @@ h2 {
   padding: 12px;
 }
 
+.app-shell.draft-mode .actions .contact-note {
+  margin: 0;
+}
+
 .draft-panel > .section-head,
 .draft-panel > .roll-meter,
 .draft-panel > .team-card,
@@ -565,6 +569,16 @@ h2 {
 #startGame {
   margin: 0 16px 12px;
   width: calc(100% - 32px);
+}
+
+.contact-note {
+  margin: 0 16px 10px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: lowercase;
 }
 
 .setup-panel > .section-head {
@@ -1329,8 +1343,69 @@ dialog ul {
 }
 
 .result-modal .primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 18px;
   width: 100%;
+  text-decoration: none;
+}
+
+.share-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.share-actions .ghost-button {
+  min-height: 42px;
+}
+
+.manual-share {
+  margin-top: 8px;
+}
+
+.manual-share input {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  padding: 0 10px;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+}
+
+.share-image-stage {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 760px;
+  background: #071b47;
+}
+
+.share-image-card {
+  width: 760px;
+  box-sizing: border-box;
+}
+
+.share-image-card .final-pitch {
+  height: 430px;
+}
+
+.share-image-cta {
+  margin-top: 16px;
+  padding: 13px 16px;
+  border: 1px solid rgba(21, 87, 255, 0.32);
+  background: linear-gradient(135deg, #1557ff, #0f8fff);
+  color: white;
+  font-size: 18px;
+  font-weight: 950;
+  text-align: center;
+}
+
+.shared-play-link {
+  min-height: 44px;
 }
 
 .final-stats {
@@ -1383,6 +1458,42 @@ dialog ul {
   padding: 7px 10px;
   color: var(--text);
   font-size: 12px;
+}
+
+.shared-team {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.shared-team p {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 2px 8px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  text-align: left;
+}
+
+.shared-team strong {
+  grid-row: span 2;
+  align-self: center;
+  color: var(--blue);
+}
+
+.shared-team span,
+.shared-team em {
+  overflow-wrap: anywhere;
+}
+
+.shared-team em {
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
 }
 
 .final-pitch {
@@ -1841,6 +1952,10 @@ dialog ul {
 
   .final-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .shared-team {
+    grid-template-columns: 1fr;
   }
 
   .team-crest {

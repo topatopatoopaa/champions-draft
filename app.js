@@ -444,7 +444,9 @@ const state = {
   simMode: "manual",
   difficulty: "normal",
   rolling: false,
-  needsThrow: true
+  needsThrow: true,
+  tournamentStarted: false,
+  lastFinalCard: null
 };
 
 const i18n = {
@@ -455,6 +457,7 @@ const i18n = {
     setupLead: "Arma un XI historico equipo por equipo y llevalo hasta la copa.",
     templatesStat: "plantillas",
     playersStat: "jugadores",
+    contactLine: "contacto: elcocsape12@gmail.com",
     sampleLabel: "Ejemplo visual",
     viewCard: "Ver tarjeta",
     pickOnField: "Elegí un recuadro marcado en el campo.",
@@ -496,6 +499,12 @@ const i18n = {
     lostGroups: "Perdiste en fase de grupos",
     lostAgainst: "Perdiste contra",
     playAgain: "Jugar de nuevo",
+    shareLink: "Compartir link",
+    shareImage: "Compartir imagen",
+    shareCopied: "Link copiado",
+    shareTitle: "Mi carta de Ruta de Estrellas",
+    buildYours: "Arma el tuyo",
+    imageCta: "https://champions-draft-iota.vercel.app/ - arma el tuyo",
     attackAvg: "Media ataque",
     defenseAvg: "Media defensa",
     wins: "Victorias",
@@ -548,6 +557,7 @@ const i18n = {
     setupLead: "Build a historic XI team by team and take it all the way to the cup.",
     templatesStat: "squads",
     playersStat: "players",
+    contactLine: "contact: elcocsape12@gmail.com",
     sampleLabel: "Visual example",
     viewCard: "View card",
     pickOnField: "Choose a highlighted slot on the pitch.",
@@ -589,6 +599,12 @@ const i18n = {
     lostGroups: "You lost in the group stage",
     lostAgainst: "You lost against",
     playAgain: "Play again",
+    shareLink: "Share link",
+    shareImage: "Share image",
+    shareCopied: "Link copied",
+    shareTitle: "My Ruta de Estrellas card",
+    buildYours: "Build yours",
+    imageCta: "https://champions-draft-iota.vercel.app/ - build yours",
     attackAvg: "Attack average",
     defenseAvg: "Defense average",
     wins: "Wins",
@@ -641,6 +657,7 @@ const i18n = {
     setupLead: "Monte um XI historico time por time e leve-o ate a taca.",
     templatesStat: "elencos",
     playersStat: "jogadores",
+    contactLine: "contato: elcocsape12@gmail.com",
     sampleLabel: "Exemplo visual",
     viewCard: "Ver cartao",
     pickOnField: "Escolha um espaco marcado no campo.",
@@ -682,6 +699,12 @@ const i18n = {
     lostGroups: "Voce perdeu na fase de grupos",
     lostAgainst: "Voce perdeu contra",
     playAgain: "Jogar de novo",
+    shareLink: "Compartilhar link",
+    shareImage: "Compartilhar imagem",
+    shareCopied: "Link copiado",
+    shareTitle: "Meu cartao Ruta de Estrellas",
+    buildYours: "Monte o seu",
+    imageCta: "https://champions-draft-iota.vercel.app/ - monte o seu",
     attackAvg: "Media ataque",
     defenseAvg: "Media defesa",
     wins: "Vitorias",
@@ -898,6 +921,7 @@ function init() {
   resetToSetup();
   bindEvents();
   applyLanguage();
+  renderSharedCardFromUrl();
 }
 
 function bindEvents() {
@@ -944,6 +968,9 @@ function applyLanguage() {
   document.querySelector("#setupKicker").textContent = tr("setupKicker");
   document.querySelector("#setupTitle").textContent = tr("setupTitle");
   document.querySelector("#setupLead").textContent = tr("setupLead");
+  document.querySelectorAll("[data-contact-note]").forEach((item) => {
+    item.textContent = tr("contactLine");
+  });
   document.querySelector("#templatesCount").textContent = teamPool.length;
   document.querySelector("#playersCount").textContent = teamPool.reduce((sum, teamItem) => sum + teamItem.roster.length, 0);
   document.querySelector("#templatesStat").textContent = tr("templatesStat");
@@ -1064,6 +1091,8 @@ function resetToSetup() {
   state.simRunning = false;
   state.rolling = false;
   state.needsThrow = true;
+  state.tournamentStarted = false;
+  state.lastFinalCard = null;
   backToDraft(false);
   document.querySelector(".app-shell").classList.remove("draft-mode");
   document.querySelector("#setupPanel").classList.remove("hidden");
@@ -1082,6 +1111,8 @@ function startGame() {
   state.currentTeam = null;
   state.needsThrow = true;
   state.rollsLeft = 3;
+  state.tournamentStarted = false;
+  state.lastFinalCard = null;
   document.querySelector("#setupPanel").classList.add("hidden");
   document.querySelector(".manager-panel").classList.remove("hidden");
   document.querySelector(".draft-panel").classList.remove("hidden");
@@ -1134,6 +1165,7 @@ function selectNextTeam(consumeRoll) {
 async function rollTeam() {
   if (state.phase !== "draft" || selectedCount() >= 11 || state.rollsLeft <= 0 || state.rolling || !state.currentTeam) return;
   state.pendingPick = null;
+  state.rolling = true;
   renderPitch();
   renderCurrentTeam();
   const button = document.querySelector("#rollTeam");
@@ -1141,8 +1173,11 @@ async function rollTeam() {
   void button.offsetWidth;
   button.classList.add("rolling-button");
   const next = selectNextTeam(true);
-  if (!next) return;
-  state.rolling = true;
+  if (!next) {
+    state.rolling = false;
+    render();
+    return;
+  }
   renderMeta();
   await animateTeamRoulette(next);
   state.currentTeam = next;
@@ -1224,6 +1259,8 @@ function renderMeta() {
   document.querySelector("#rollTeam span").textContent = `${tr("otherTeam")} (${state.rollsLeft})`;
   document.querySelector("#throwTeam").disabled = state.phase !== "draft" || selectedCount() >= 11 || state.rolling || !state.needsThrow;
   document.querySelector("#startTournament").disabled = state.simRunning || selectedCount() !== 11;
+  document.querySelector("#backToDraft").classList.toggle("hidden", state.tournamentStarted);
+  document.querySelector("#backToDraft").disabled = state.tournamentStarted;
   renderSimMode();
 }
 
@@ -1288,7 +1325,7 @@ function renderCurrentTeam() {
       const card = document.createElement("button");
       const isPending = state.pendingPick?.player.name === player.name && state.pendingPick?.teamItem.id === teamItem.id;
       card.className = `player-card ${choices.length ? "" : "blocked"} ${isPending ? "selected" : ""}`;
-      card.disabled = !choices.length || state.phase !== "draft";
+      card.disabled = !choices.length || state.phase !== "draft" || state.rolling;
       card.innerHTML = `
         <span>
           <span class="player-name">${player.name}</span>
@@ -1325,6 +1362,7 @@ function renderLeague() {
 }
 
 function openPositionPicker(teamItem, player) {
+  if (state.rolling) return;
   const choices = eligibleSlotsFor(player);
   if (!choices.length) return;
   state.pendingPick = { teamItem, player };
@@ -1335,6 +1373,7 @@ function openPositionPicker(teamItem, player) {
 }
 
 function chooseSlot(slotId) {
+  if (state.rolling) return;
   const slot = state.slots.find((item) => item.id === slotId);
   if (!slot || !state.pendingPick) return;
   const { teamItem, player } = state.pendingPick;
@@ -1432,6 +1471,7 @@ function ratingLabel(value) {
 async function playTournament() {
   if (state.simRunning || selectedCount() !== 11) return;
   document.querySelector("#championsStart").classList.add("hidden");
+  state.tournamentStarted = true;
   state.simRunning = true;
   renderMeta();
   const userPower = averageRating();
@@ -1728,6 +1768,7 @@ function openChampionsPage() {
 }
 
 function backToDraft(clearHash = true) {
+  if (state.tournamentStarted) return;
   document.querySelector(".app-shell").classList.remove("hidden");
   document.querySelector("#championsPage").classList.add("hidden");
   if (clearHash) history.replaceState(null, "", window.location.pathname);
@@ -1759,11 +1800,13 @@ function showFinal(won, log) {
   const stats = tournamentStats(log);
   const averages = teamAverages();
   const contribution = contributionStats(log);
+  const title = won ? tr("won") : lostInGroups ? tr("lostGroups") : `${tr("lostAgainst")} ${last.opponent.name}`;
+  state.lastFinalCard = { won, title, stats, averages, contribution, players: selectedPlayers(), formation: state.formationName };
   const root = document.querySelector("#resultModal");
   root.className = `result-modal ${won ? "champion-modal" : ""}`;
   root.innerHTML = `
     <p class="eyebrow">${won ? tr("champion") : tr("eliminated")}</p>
-    <h2>${won ? tr("won") : lostInGroups ? tr("lostGroups") : `${tr("lostAgainst")} ${last.opponent.name}`}</h2>
+    <h2>${title}</h2>
     <div class="final-stats">
       <span>${tr("avg")} <strong>${averages.overall}</strong></span>
       <span>${tr("attackAvg")} <strong>${averages.attack}</strong></span>
@@ -1779,13 +1822,291 @@ function showFinal(won, log) {
       ${contributionTable(tr("assists"), contribution.assists)}
     </div>
     <div class="final-pitch">${finalPitchHtml()}</div>
+    <div class="share-actions">
+      <button id="shareFinalImage" class="ghost-button">${tr("shareImage")}</button>
+    </div>
     <button id="playAgain" class="primary-button">${tr("playAgain")}</button>
   `;
+  document.querySelector("#shareFinalImage").addEventListener("click", shareFinalImage);
   document.querySelector("#playAgain").addEventListener("click", () => {
     document.querySelector("#resultDialog").close();
     resetToSetup();
   });
   document.querySelector("#resultDialog").showModal();
+}
+
+async function shareFinalLink() {
+  if (!state.lastFinalCard) return;
+  const text = finalShareText(state.lastFinalCard);
+  const url = finalShareUrl(state.lastFinalCard);
+  const copied = await copyShareText(`${text}\n${url}`);
+  document.querySelector("#shareFinalLink").textContent = copied ? tr("shareCopied") : tr("shareLink");
+  if (!copied) showManualShareBox(url);
+}
+
+async function shareFinalImage() {
+  if (!state.lastFinalCard) return;
+  const blob = await finalShareImageBlob();
+  const file = new File([blob], "ruta-de-estrellas.png", { type: "image/png" });
+  if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+    try {
+      await navigator.share({ title: tr("shareTitle"), text: finalShareText(state.lastFinalCard), files: [file] });
+      return;
+    } catch (error) {
+      // Fall through to download.
+    }
+  }
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "ruta-de-estrellas.png";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
+
+function finalShareUrl(card) {
+  const payload = {
+    r: card.won ? 1 : 0,
+    t: card.title,
+    f: card.formation,
+    a: [card.averages.overall, card.averages.attack, card.averages.defense],
+    s: [card.stats.wins, card.stats.draws, card.stats.losses, card.stats.goalsFor, card.stats.goalsAgainst],
+    p: card.players.map((player) => [player.name, player.chosenPosition, player.teamName])
+  };
+  return `https://champions-draft-iota.vercel.app/#card=${encodeSharePayload(payload)}`;
+}
+
+function encodeSharePayload(payload) {
+  const bytes = new TextEncoder().encode(JSON.stringify(payload));
+  let binary = "";
+  for (let i = 0; i < bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.slice(i, i + 8192));
+  }
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+function decodeSharePayload(value) {
+  const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+async function copyShareText(text) {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (error) {
+    // Try the older selection-based copy below.
+  }
+  try {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    return copied;
+  } catch (error) {
+    return false;
+  }
+}
+
+function showManualShareBox(url) {
+  const existing = document.querySelector(".manual-share");
+  if (existing) existing.remove();
+  const box = document.createElement("div");
+  box.className = "manual-share";
+  box.innerHTML = `<input value="${url.replace(/"/g, "&quot;")}" readonly>`;
+  document.querySelector(".share-actions").after(box);
+  const input = box.querySelector("input");
+  input.focus();
+  input.select();
+}
+
+function finalShareText(card) {
+  const record = `${card.stats.wins}V ${card.stats.draws}E ${card.stats.losses}D`;
+  return `${tr("shareTitle")} - ${card.title}\n${tr("avg")}: ${card.averages.overall} | ${tr("attackAvg")}: ${card.averages.attack} | ${tr("defenseAvg")}: ${card.averages.defense}\n${record} | ${tr("goalsFor")}: ${card.stats.goalsFor} | ${tr("goalsAgainst")}: ${card.stats.goalsAgainst}`;
+}
+
+async function finalShareImageBlob() {
+  const card = state.lastFinalCard;
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1500;
+  const ctx = canvas.getContext("2d");
+  const bg = ctx.createLinearGradient(0, 0, 1080, 1500);
+  bg.addColorStop(0, card.won ? "#fff1ad" : "#071b47");
+  bg.addColorStop(0.5, card.won ? "#d7b56d" : "#1557ff");
+  bg.addColorStop(1, card.won ? "#8b651c" : "#0f8fff");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, 1080, 1500);
+  drawRoundRect(ctx, 70, 60, 940, 1360, 34, "rgba(255,255,255,0.94)");
+  ctx.fillStyle = "#071b47";
+  ctx.textAlign = "center";
+  ctx.font = "900 34px Arial";
+  ctx.fillText("Ruta de Estrellas", 540, 130);
+  ctx.font = "900 54px Arial";
+  drawWrappedText(ctx, card.title, 540, 205, 850, 60);
+  const stats = [
+    [tr("avg"), card.averages.overall],
+    [tr("attackAvg"), card.averages.attack],
+    [tr("defenseAvg"), card.averages.defense],
+    [tr("wins"), card.stats.wins],
+    [tr("draws"), card.stats.draws],
+    [tr("losses"), card.stats.losses],
+    [tr("goalsFor"), card.stats.goalsFor],
+    [tr("goalsAgainst"), card.stats.goalsAgainst]
+  ];
+  stats.forEach(([label, value], index) => {
+    const x = 115 + (index % 4) * 215;
+    const y = 325 + Math.floor(index / 4) * 88;
+    drawRoundRect(ctx, x, y, 190, 64, 12, "#f4f7ff");
+    ctx.fillStyle = "#4c5f86";
+    ctx.font = "800 18px Arial";
+    ctx.fillText(label.toUpperCase(), x + 95, y + 24);
+    ctx.fillStyle = "#071b47";
+    ctx.font = "900 26px Arial";
+    ctx.fillText(String(value), x + 95, y + 52);
+  });
+  drawContributionImageSection(ctx, tr("scorers"), card.contribution.scorers, 115, 520);
+  drawContributionImageSection(ctx, tr("assists"), card.contribution.assists, 565, 520);
+  drawPitchImage(ctx, card.players, 155, 760, 770, 465);
+  drawRoundRect(ctx, 115, 1285, 850, 56, 14, "#1557ff");
+  ctx.fillStyle = "white";
+  ctx.font = "900 24px Arial";
+  ctx.fillText(tr("imageCta"), 540, 1321);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("No se pudo generar la imagen")), "image/png", 0.95);
+  });
+}
+
+function drawContributionImageSection(ctx, title, rows, x, y) {
+  drawRoundRect(ctx, x, y, 400, 178, 12, "rgba(255,255,255,0.82)");
+  ctx.fillStyle = "#071b47";
+  ctx.textAlign = "left";
+  ctx.font = "900 22px Arial";
+  ctx.fillText(title, x + 18, y + 34);
+  ctx.font = "700 18px Arial";
+  const list = rows.length ? rows.slice(0, 4) : [[tr("noStats"), 0]];
+  list.forEach(([name, total], index) => {
+    const yy = y + 68 + index * 25;
+    ctx.fillStyle = "#071b47";
+    ctx.fillText(trimCanvasText(ctx, name, 285), x + 18, yy);
+    ctx.textAlign = "right";
+    ctx.fillText(String(total), x + 372, yy);
+    ctx.textAlign = "left";
+  });
+  ctx.textAlign = "center";
+}
+
+function drawPitchImage(ctx, players, x, y, w, h) {
+  drawRoundRect(ctx, x, y, w, h, 16, "#17824e");
+  ctx.strokeStyle = "rgba(255,255,255,0.74)";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(x + 10, y + 10, w - 20, h - 20);
+  ctx.beginPath();
+  ctx.moveTo(x + 10, y + h / 2);
+  ctx.lineTo(x + w - 10, y + h / 2);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(x + w / 2, y + h / 2, 58, 0, Math.PI * 2);
+  ctx.stroke();
+  const sorted = [...players].sort((a, b) => positionShareRank(a.chosenPosition) - positionShareRank(b.chosenPosition));
+  const rows = [sorted.slice(0, 1), sorted.slice(1, 5), sorted.slice(5, 8), sorted.slice(8, 11)];
+  rows.forEach((row, rowIndex) => {
+    const yy = y + 42 + rowIndex * 128;
+    row.forEach((player, index) => {
+      const xx = x + (w / (row.length + 1)) * (index + 1);
+      drawRoundRect(ctx, xx - 70, yy - 20, 140, 44, 10, "rgba(255,255,255,0.92)");
+      ctx.fillStyle = "#071b47";
+      ctx.font = "900 15px Arial";
+      ctx.fillText(trimCanvasText(ctx, shortPlayerName(player.name), 120), xx, yy - 2);
+      ctx.fillStyle = "#4c5f86";
+      ctx.font = "800 12px Arial";
+      ctx.fillText(posLabel(player.chosenPosition), xx, yy + 15);
+    });
+  });
+}
+
+function positionShareRank(position) {
+  return { GK: 0, CB: 1, LB: 1, RB: 1, DM: 2, CM: 2, LM: 2, RM: 2, AM: 2, LW: 3, RW: 3, ST: 3 }[position] ?? 2;
+}
+
+function drawRoundRect(ctx, x, y, width, height, radius, fillStyle) {
+  ctx.fillStyle = fillStyle;
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(" ");
+  let line = "";
+  words.forEach((word) => {
+    const test = line ? `${line} ${word}` : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      ctx.fillText(line, x, y);
+      line = word;
+      y += lineHeight;
+    } else {
+      line = test;
+    }
+  });
+  if (line) ctx.fillText(line, x, y);
+}
+
+function trimCanvasText(ctx, text, maxWidth) {
+  if (ctx.measureText(text).width <= maxWidth) return text;
+  let trimmed = text;
+  while (trimmed.length > 3 && ctx.measureText(`${trimmed}...`).width > maxWidth) {
+    trimmed = trimmed.slice(0, -1);
+  }
+  return `${trimmed}...`;
+}
+
+function renderSharedCardFromUrl() {
+  if (!window.location.hash.startsWith("#card=")) return;
+  try {
+    const payload = decodeSharePayload(window.location.hash.slice(6));
+    const averages = { overall: payload.a?.[0] ?? "-", attack: payload.a?.[1] ?? "-", defense: payload.a?.[2] ?? "-" };
+    const stats = { wins: payload.s?.[0] ?? 0, draws: payload.s?.[1] ?? 0, losses: payload.s?.[2] ?? 0, goalsFor: payload.s?.[3] ?? 0, goalsAgainst: payload.s?.[4] ?? 0 };
+    const safe = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[char]));
+    const root = document.querySelector("#resultModal");
+    root.className = `result-modal ${payload.r === 1 ? "champion-modal" : ""}`;
+    root.innerHTML = `
+      <p class="eyebrow">${payload.r === 1 ? tr("champion") : tr("eliminated")}</p>
+      <h2>${safe(payload.t)}</h2>
+      <div class="final-stats">
+        <span>${tr("avg")} <strong>${averages.overall}</strong></span>
+        <span>${tr("attackAvg")} <strong>${averages.attack}</strong></span>
+        <span>${tr("defenseAvg")} <strong>${averages.defense}</strong></span>
+        <span>${tr("wins")} <strong>${stats.wins}</strong></span>
+        <span>${tr("draws")} <strong>${stats.draws}</strong></span>
+        <span>${tr("losses")} <strong>${stats.losses}</strong></span>
+        <span>${tr("goalsFor")} <strong>${stats.goalsFor}</strong></span>
+        <span>${tr("goalsAgainst")} <strong>${stats.goalsAgainst}</strong></span>
+      </div>
+      <div class="shared-team">
+        ${(payload.p || []).map(([name, position, teamName]) => `<p><strong>${safe(posLabel(position))}</strong><span>${safe(name)}</span><em>${safe(teamName)}</em></p>`).join("")}
+      </div>
+      <a class="primary-button shared-play-link" href="https://7a0.com.br/r/5R4YPW">${tr("buildYours")}</a>
+    `;
+    document.querySelector("#resultDialog").showModal();
+  } catch (error) {
+    history.replaceState(null, "", window.location.pathname);
+  }
 }
 
 function contributionStats(log) {

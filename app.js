@@ -428,6 +428,162 @@ teamPool.push(
   ])
 );
 
+teamPool.push(
+  team(2829, "Real Madrid", "1997/98", "La Septima de Heynckes", 90, [
+    p("Bodo Illgner", 86, ["GK"]), p("Christian Panucci", 85, ["RB", "CB"]), p("Manolo Sanchis", 86, ["CB"]), p("Fernando Hierro", 90, ["CB", "DM"]),
+    p("Roberto Carlos", 92, ["LB", "LM"]), p("Christian Karembeu", 85, ["DM", "CM"]), p("Fernando Redondo", 92, ["DM", "CM"]), p("Clarence Seedorf", 90, ["CM", "AM"]),
+    p("Predrag Mijatovic", 90, ["ST", "AM"]), p("Raul", 91, ["ST", "AM"]), p("Fernando Morientes", 86, ["ST"]), p("Davor Suker", 87, ["ST"]),
+    p("Savio", 84, ["LW", "LM"]), p("Jose Amavisca", 81, ["LM", "LW"])
+  ]),
+  team(9885, "Juventus", "1997/98", "Finalista con Zidane y Del Piero", 91, [
+    p("Angelo Peruzzi", 90, ["GK"]), p("Moreno Torricelli", 84, ["RB", "LB"]), p("Ciro Ferrara", 90, ["CB"]), p("Paolo Montero", 88, ["CB"]),
+    p("Mark Iuliano", 84, ["CB"]), p("Didier Deschamps", 88, ["DM", "CM"]), p("Edgar Davids", 91, ["CM", "DM"]), p("Zinedine Zidane", 96, ["AM", "CM"]),
+    p("Angelo Di Livio", 84, ["RM", "RB"]), p("Alessandro Del Piero", 94, ["ST", "AM", "LW"]), p("Filippo Inzaghi", 90, ["ST"]), p("Antonio Conte", 86, ["CM", "DM"]),
+    p("Alessio Tacchinardi", 84, ["DM", "CM"]), p("Daniel Fonseca", 81, ["ST"])
+  ]),
+  team(2672, "Bayern", "1998/99", "Finalista dramatico del Camp Nou", 90, [
+    p("Oliver Kahn", 94, ["GK"]), p("Markus Babbel", 86, ["RB", "CB"]), p("Lothar Matthaus", 88, ["CB", "DM"]), p("Samuel Kuffour", 86, ["CB"]),
+    p("Thomas Linke", 84, ["CB"]), p("Bixente Lizarazu", 88, ["LB"]), p("Stefan Effenberg", 91, ["CM", "DM"]), p("Jens Jeremies", 86, ["DM", "CM"]),
+    p("Mario Basler", 87, ["RM", "RW"]), p("Mehmet Scholl", 88, ["AM", "LM"]), p("Carsten Jancker", 84, ["ST"]), p("Alexander Zickler", 82, ["ST", "RW"]),
+    p("Hasan Salihamidzic", 83, ["RM", "RB"]), p("Giovane Elber", 88, ["ST"])
+  ]),
+  team(2829, "Real Madrid", "1999/00", "Campeon del Stade de France", 90, [
+    p("Iker Casillas", 86, ["GK"]), p("Michel Salgado", 85, ["RB"]), p("Fernando Hierro", 88, ["CB"]), p("Ivan Helguera", 86, ["CB", "DM"]),
+    p("Roberto Carlos", 92, ["LB", "LM"]), p("Fernando Redondo", 93, ["DM", "CM"]), p("Steve McManaman", 86, ["RM", "CM"]), p("Savio", 84, ["LW", "LM"]),
+    p("Raul", 92, ["ST", "AM"]), p("Nicolas Anelka", 85, ["ST"]), p("Fernando Morientes", 86, ["ST"]), p("Guti", 84, ["AM", "CM"]),
+    p("Aitor Karanka", 81, ["CB"]), p("Geremi", 81, ["RM", "RB", "DM"])
+  ]),
+  team(2816, "Valencia", "1999/00", "Finalista de Cuper", 86, [
+    p("Santiago Canizares", 88, ["GK"]), p("Jocelyn Angloma", 84, ["RB"]), p("Mauricio Pellegrino", 84, ["CB"]), p("Miroslav Djukic", 84, ["CB"]),
+    p("Amedeo Carboni", 84, ["LB"]), p("David Albelda", 84, ["DM", "CM"]), p("Gerard Lopez", 85, ["CM", "AM"]), p("Gaizka Mendieta", 89, ["RM", "CM"]),
+    p("Kily Gonzalez", 86, ["LM", "LW"]), p("Claudio Lopez", 88, ["ST", "LW"]), p("John Carew", 82, ["ST"]), p("Miguel Angel Angulo", 83, ["RW", "ST"]),
+    p("Javier Farinos", 82, ["CM", "DM"]), p("Adrian Ilie", 83, ["ST", "LW"])
+  ]),
+  team(2692, "Milan", "2002/03", "Campeon en Old Trafford", 93, [
+    p("Dida", 89, ["GK"]), p("Alessandro Costacurta", 86, ["RB", "CB"]), p("Alessandro Nesta", 94, ["CB"]), p("Paolo Maldini", 93, ["CB", "LB"]),
+    p("Kakha Kaladze", 84, ["LB", "CB"]), p("Andrea Pirlo", 91, ["DM", "CM"]), p("Gennaro Gattuso", 88, ["DM", "CM"]), p("Clarence Seedorf", 90, ["CM", "AM"]),
+    p("Rui Costa", 90, ["AM"]), p("Andriy Shevchenko", 94, ["ST"]), p("Filippo Inzaghi", 90, ["ST"]), p("Rivaldo", 90, ["AM", "LW"]),
+    p("Serginho", 85, ["LM", "LB"]), p("Jon Dahl Tomasson", 82, ["ST"])
+  ]),
+  team(1653, "Monaco", "2003/04", "Finalista sorpresa de Deschamps", 83, [
+    p("Flavio Roma", 81, ["GK"]), p("Hugo Ibarra", 82, ["RB"]), p("Julien Rodriguez", 80, ["CB"]), p("Sebastien Squillaci", 82, ["CB"]),
+    p("Patrice Evra", 84, ["LB", "LM"]), p("Lucas Bernardi", 82, ["DM", "CM"]), p("Edouard Cisse", 80, ["DM", "CM"]), p("Andreas Zikos", 81, ["DM", "CM"]),
+    p("Jerome Rothen", 85, ["LM", "LW"]), p("Ludovic Giuly", 88, ["AM", "RW", "ST"]), p("Fernando Morientes", 88, ["ST"]), p("Dado Prso", 84, ["ST"]),
+    p("Shabani Nonda", 82, ["ST"]), p("Emmanuel Adebayor", 78, ["ST"])
+  ]),
+  team(2817, "Barcelona", "2005/06", "Campeon de Paris con Ronaldinho", 93, [
+    p("Victor Valdes", 86, ["GK"]), p("Juliano Belletti", 82, ["RB"]), p("Rafael Marquez", 88, ["CB", "DM"]), p("Carles Puyol", 92, ["CB", "RB"]),
+    p("Giovanni van Bronckhorst", 85, ["LB", "DM"]), p("Edmilson", 84, ["DM", "CB"]), p("Deco", 92, ["CM", "AM"]), p("Xavi", 91, ["CM"]),
+    p("Ronaldinho", 96, ["LW", "AM"]), p("Samuel Eto'o", 93, ["ST"]), p("Ludovic Giuly", 86, ["RW"]), p("Andres Iniesta", 84, ["CM", "AM"]),
+    p("Henrik Larsson", 85, ["ST"]), p("Lionel Messi", 82, ["RW", "ST"])
+  ]),
+  team(44, "Liverpool", "2006/07", "Finalista de Atenas", 86, [
+    p("Pepe Reina", 86, ["GK"]), p("Steve Finnan", 82, ["RB"]), p("Jamie Carragher", 88, ["CB"]), p("Daniel Agger", 83, ["CB"]),
+    p("John Arne Riise", 83, ["LB", "LM"]), p("Javier Mascherano", 86, ["DM", "CM"]), p("Xabi Alonso", 89, ["CM", "DM"]), p("Steven Gerrard", 92, ["CM", "RM", "AM"]),
+    p("Jermaine Pennant", 80, ["RW", "RM"]), p("Dirk Kuyt", 84, ["ST", "RW"]), p("Peter Crouch", 83, ["ST"]), p("Craig Bellamy", 81, ["ST"]),
+    p("Harry Kewell", 82, ["LW", "LM"]), p("Alvaro Arbeloa", 81, ["RB", "LB"])
+  ]),
+  team(35, "Man United", "2008/09", "Finalista de Roma", 93, [
+    p("Edwin van der Sar", 91, ["GK"]), p("John O'Shea", 82, ["RB", "CB"]), p("Rio Ferdinand", 92, ["CB"]), p("Nemanja Vidic", 93, ["CB"]),
+    p("Patrice Evra", 90, ["LB"]), p("Michael Carrick", 87, ["CM", "DM"]), p("Darren Fletcher", 85, ["CM", "RM"]), p("Ryan Giggs", 88, ["CM", "LM"]),
+    p("Cristiano Ronaldo", 99, ["RW", "ST", "LW"]), p("Wayne Rooney", 92, ["ST", "LW"]), p("Carlos Tevez", 88, ["ST"]), p("Dimitar Berbatov", 86, ["ST"]),
+    p("Park Ji-sung", 84, ["LM", "RM", "CM"]), p("Nani", 84, ["LW", "RW"])
+  ]),
+  team(2672, "Bayern", "2009/10", "Finalista de Van Gaal", 88, [
+    p("Hans-Jorg Butt", 82, ["GK"]), p("Philipp Lahm", 91, ["RB", "LB"]), p("Daniel Van Buyten", 84, ["CB"]), p("Martin Demichelis", 83, ["CB"]),
+    p("Holger Badstuber", 81, ["CB", "LB"]), p("Mark van Bommel", 86, ["DM", "CM"]), p("Bastian Schweinsteiger", 89, ["CM", "DM"]), p("Arjen Robben", 92, ["RW"]),
+    p("Franck Ribery", 90, ["LW"]), p("Thomas Muller", 86, ["AM", "ST", "RM"]), p("Ivica Olic", 84, ["ST", "LW"]), p("Mario Gomez", 85, ["ST"]),
+    p("Miroslav Klose", 84, ["ST"]), p("Hamit Altintop", 82, ["RM", "CM"])
+  ]),
+  team(35, "Man United", "2010/11", "Finalista de Wembley", 90, [
+    p("Edwin van der Sar", 91, ["GK"]), p("Fabio", 81, ["RB", "LB"]), p("Rio Ferdinand", 90, ["CB"]), p("Nemanja Vidic", 93, ["CB"]),
+    p("Patrice Evra", 89, ["LB"]), p("Michael Carrick", 86, ["CM", "DM"]), p("Ryan Giggs", 88, ["CM", "LM"]), p("Antonio Valencia", 86, ["RM", "RW"]),
+    p("Park Ji-sung", 84, ["LM", "RM", "CM"]), p("Wayne Rooney", 92, ["ST", "AM"]), p("Javier Hernandez", 85, ["ST"]), p("Nani", 87, ["RW", "LW"]),
+    p("Dimitar Berbatov", 84, ["ST"]), p("Paul Scholes", 86, ["CM"])
+  ]),
+  team(2672, "Bayern", "2011/12", "Finalista en su estadio", 91, [
+    p("Manuel Neuer", 92, ["GK"]), p("Philipp Lahm", 92, ["RB", "LB"]), p("Jerome Boateng", 86, ["CB", "RB"]), p("Holger Badstuber", 84, ["CB"]),
+    p("David Alaba", 86, ["LB", "CM"]), p("Luiz Gustavo", 84, ["DM", "CM"]), p("Bastian Schweinsteiger", 91, ["CM", "DM"]), p("Toni Kroos", 88, ["CM", "AM"]),
+    p("Arjen Robben", 92, ["RW"]), p("Franck Ribery", 91, ["LW"]), p("Mario Gomez", 88, ["ST"]), p("Thomas Muller", 87, ["AM", "ST", "RM"]),
+    p("Anatoliy Tymoshchuk", 82, ["DM", "CB"]), p("Ivica Olic", 82, ["ST", "LW"])
+  ]),
+  team(9885, "Juventus", "2014/15", "Finalista de Berlin", 91, [
+    p("Gianluigi Buffon", 94, ["GK"]), p("Stephan Lichtsteiner", 86, ["RB", "RM"]), p("Leonardo Bonucci", 90, ["CB"]), p("Andrea Barzagli", 89, ["CB"]),
+    p("Giorgio Chiellini", 91, ["CB", "LB"]), p("Patrice Evra", 84, ["LB"]), p("Andrea Pirlo", 91, ["DM", "CM"]), p("Claudio Marchisio", 88, ["CM", "DM"]),
+    p("Arturo Vidal", 90, ["CM", "AM"]), p("Paul Pogba", 89, ["CM", "LM"]), p("Carlos Tevez", 90, ["ST", "AM"]), p("Alvaro Morata", 86, ["ST"]),
+    p("Roberto Pereyra", 82, ["AM", "CM"]), p("Fernando Llorente", 82, ["ST"])
+  ]),
+  team(2829, "Real Madrid", "2015/16", "Undecima de Zidane", 94, [
+    p("Keylor Navas", 89, ["GK"]), p("Dani Carvajal", 88, ["RB"]), p("Sergio Ramos", 92, ["CB"]), p("Pepe", 88, ["CB"]),
+    p("Marcelo", 91, ["LB", "LM"]), p("Casemiro", 87, ["DM"]), p("Toni Kroos", 91, ["CM", "DM"]), p("Luka Modric", 92, ["CM"]),
+    p("Isco", 87, ["AM", "CM"]), p("Cristiano Ronaldo", 99, ["LW", "ST"]), p("Karim Benzema", 91, ["ST"]), p("Gareth Bale", 91, ["RW", "LW"]),
+    p("James Rodriguez", 86, ["AM", "RM"]), p("Lucas Vazquez", 82, ["RW", "RM"])
+  ]),
+  team(9885, "Juventus", "2016/17", "Finalista de Cardiff", 92, [
+    p("Gianluigi Buffon", 94, ["GK"]), p("Dani Alves", 89, ["RB", "RM"]), p("Leonardo Bonucci", 91, ["CB"]), p("Andrea Barzagli", 88, ["CB"]),
+    p("Giorgio Chiellini", 91, ["CB", "LB"]), p("Alex Sandro", 87, ["LB", "LM"]), p("Miralem Pjanic", 88, ["CM", "DM"]), p("Sami Khedira", 86, ["CM", "DM"]),
+    p("Paulo Dybala", 91, ["AM", "ST"]), p("Mario Mandzukic", 87, ["LW", "ST"]), p("Gonzalo Higuain", 90, ["ST"]), p("Juan Cuadrado", 86, ["RW", "RM"]),
+    p("Claudio Marchisio", 86, ["CM", "DM"]), p("Stephan Lichtsteiner", 83, ["RB", "RM"])
+  ]),
+  team(2829, "Real Madrid", "2017/18", "Tercera Champions seguida", 94, [
+    p("Keylor Navas", 88, ["GK"]), p("Dani Carvajal", 88, ["RB"]), p("Raphael Varane", 90, ["CB"]), p("Sergio Ramos", 92, ["CB"]),
+    p("Marcelo", 91, ["LB", "LM"]), p("Casemiro", 89, ["DM"]), p("Toni Kroos", 92, ["CM", "DM"]), p("Luka Modric", 94, ["CM", "AM"]),
+    p("Isco", 88, ["AM", "CM"]), p("Cristiano Ronaldo", 99, ["ST", "LW"]), p("Karim Benzema", 89, ["ST"]), p("Gareth Bale", 88, ["RW", "LW"]),
+    p("Marco Asensio", 84, ["LW", "RW", "AM"]), p("Lucas Vazquez", 82, ["RW", "RM"])
+  ]),
+  team(44, "Liverpool", "2017/18", "Finalista de Kiev", 89, [
+    p("Loris Karius", 78, ["GK"]), p("Trent Alexander-Arnold", 84, ["RB", "RM"]), p("Dejan Lovren", 82, ["CB"]), p("Virgil van Dijk", 90, ["CB"]),
+    p("Andrew Robertson", 86, ["LB", "LM"]), p("Jordan Henderson", 85, ["DM", "CM"]), p("James Milner", 84, ["CM", "LB"]), p("Georginio Wijnaldum", 85, ["CM", "AM"]),
+    p("Mohamed Salah", 93, ["RW", "ST"]), p("Roberto Firmino", 89, ["ST", "AM"]), p("Sadio Mane", 90, ["LW", "ST"]), p("Alex Oxlade-Chamberlain", 82, ["CM", "RW"]),
+    p("Emre Can", 82, ["DM", "CM"]), p("Adam Lallana", 81, ["AM", "CM"])
+  ]),
+  team(2829, "Real Madrid", "2021/22", "Campeon de Paris con remontadas", 93, [
+    p("Thibaut Courtois", 94, ["GK"]), p("Dani Carvajal", 86, ["RB"]), p("Eder Militao", 88, ["CB"]), p("David Alaba", 88, ["CB", "LB"]),
+    p("Ferland Mendy", 84, ["LB"]), p("Casemiro", 89, ["DM"]), p("Toni Kroos", 90, ["CM", "DM"]), p("Luka Modric", 92, ["CM", "AM"]),
+    p("Federico Valverde", 87, ["RM", "CM", "RW"]), p("Vinicius Junior", 91, ["LW"]), p("Karim Benzema", 96, ["ST"]), p("Rodrygo", 85, ["RW", "LW"]),
+    p("Eduardo Camavinga", 83, ["CM", "DM"]), p("Marco Asensio", 82, ["RW", "AM"])
+  ]),
+  team(2829, "Real Madrid", "2023/24", "Campeon de Wembley", 94, [
+    p("Thibaut Courtois", 91, ["GK"]), p("Dani Carvajal", 88, ["RB"]), p("Antonio Rudiger", 90, ["CB"]), p("Nacho", 84, ["CB", "RB"]),
+    p("Ferland Mendy", 84, ["LB"]), p("Aurelien Tchouameni", 88, ["DM", "CB"]), p("Toni Kroos", 91, ["CM", "DM"]), p("Federico Valverde", 90, ["CM", "RM"]),
+    p("Jude Bellingham", 93, ["AM", "CM"]), p("Vinicius Junior", 94, ["LW", "ST"]), p("Rodrygo", 88, ["RW", "ST", "LW"]), p("Eduardo Camavinga", 87, ["CM", "DM", "LB"]),
+    p("Luka Modric", 87, ["CM", "AM"]), p("Joselu", 82, ["ST"])
+  ]),
+  team(2673, "Dortmund", "2023/24", "Finalista de Terzic", 87, [
+    p("Gregor Kobel", 88, ["GK"]), p("Julian Ryerson", 82, ["RB", "LB"]), p("Mats Hummels", 88, ["CB"]), p("Nico Schlotterbeck", 86, ["CB"]),
+    p("Ian Maatsen", 83, ["LB", "LM"]), p("Emre Can", 84, ["DM", "CB"]), p("Marcel Sabitzer", 85, ["CM", "AM"]), p("Julian Brandt", 86, ["AM", "RM"]),
+    p("Jadon Sancho", 84, ["RW", "LW"]), p("Karim Adeyemi", 82, ["LW", "ST"]), p("Niclas Fullkrug", 84, ["ST"]), p("Marco Reus", 83, ["AM", "LW"]),
+    p("Donyell Malen", 83, ["RW", "ST"]), p("Jamie Bynoe-Gittens", 79, ["LW", "RW"])
+  ]),
+  team(1644, "PSG", "2024/25", "Primer titulo parisino", 93, [
+    p("Gianluigi Donnarumma", 90, ["GK"]), p("Achraf Hakimi", 90, ["RB", "RM"]), p("Marquinhos", 89, ["CB"]), p("Willian Pacho", 85, ["CB"]),
+    p("Nuno Mendes", 89, ["LB", "LM"]), p("Vitinha", 90, ["CM", "DM"]), p("Joao Neves", 87, ["CM", "DM"]), p("Fabian Ruiz", 86, ["CM"]),
+    p("Desire Doue", 87, ["RW", "AM", "LW"]), p("Khvicha Kvaratskhelia", 91, ["LW"]), p("Ousmane Dembele", 91, ["ST", "RW"]), p("Bradley Barcola", 86, ["LW", "RW"]),
+    p("Goncalo Ramos", 83, ["ST"]), p("Warren Zaire-Emery", 85, ["CM", "RM"])
+  ]),
+  team(2697, "Inter", "2024/25", "Finalista de Munich", 88, [
+    p("Yann Sommer", 86, ["GK"]), p("Benjamin Pavard", 85, ["CB", "RB"]), p("Francesco Acerbi", 84, ["CB"]), p("Alessandro Bastoni", 88, ["CB", "LB"]),
+    p("Denzel Dumfries", 84, ["RM", "RB"]), p("Federico Dimarco", 86, ["LM", "LB"]), p("Hakan Calhanoglu", 88, ["DM", "CM"]), p("Nicolo Barella", 89, ["CM"]),
+    p("Henrikh Mkhitaryan", 83, ["CM", "AM"]), p("Lautaro Martinez", 90, ["ST"]), p("Marcus Thuram", 86, ["ST", "LW"]), p("Mehdi Taremi", 81, ["ST"]),
+    p("Piotr Zielinski", 83, ["CM", "AM"]), p("Davide Frattesi", 82, ["CM"])
+  ]),
+  team(1644, "PSG", "2025/26", "Bicampeon de Luis Enrique", 94, [
+    p("Matvey Safonov", 85, ["GK"]), p("Lucas Chevalier", 84, ["GK"]), p("Achraf Hakimi", 90, ["RB", "RM"]), p("Marquinhos", 90, ["CB"]),
+    p("Willian Pacho", 86, ["CB"]), p("Nuno Mendes", 89, ["LB", "LM"]), p("Lucas Beraldo", 83, ["CB", "LB"]), p("Illia Zabarnyi", 85, ["CB"]),
+    p("Vitinha", 92, ["CM", "DM"]), p("Joao Neves", 88, ["CM", "RM", "DM"]), p("Fabian Ruiz", 86, ["CM", "LM"]), p("Desire Doue", 88, ["AM", "RW", "LW"]),
+    p("Ousmane Dembele", 92, ["ST", "RW"]), p("Khvicha Kvaratskhelia", 91, ["LW"]), p("Warren Zaire-Emery", 86, ["CM", "RM"]), p("Goncalo Ramos", 84, ["ST"]),
+    p("Bradley Barcola", 87, ["LW", "RW"]), p("Lee Kang-in", 83, ["AM", "RM", "CM"]), p("Lucas Hernandez", 84, ["CB", "LB"])
+  ]),
+  team(42, "Arsenal", "2025/26", "Finalista de Budapest", 92, [
+    p("David Raya", 88, ["GK"]), p("Kepa Arrizabalaga", 82, ["GK"]), p("Cristhian Mosquera", 83, ["RB", "CB"]), p("William Saliba", 92, ["CB"]),
+    p("Gabriel Magalhaes", 90, ["CB"]), p("Piero Hincapie", 86, ["LB", "CB"]), p("Jurrien Timber", 86, ["RB", "CB"]), p("Riccardo Calafiori", 85, ["LB", "CB"]),
+    p("Declan Rice", 91, ["DM", "CM"]), p("Myles Lewis-Skelly", 83, ["CM", "LB"]), p("Martin Odegaard", 90, ["AM", "CM"]), p("Bukayo Saka", 92, ["RW"]),
+    p("Leandro Trossard", 84, ["LW", "ST"]), p("Kai Havertz", 86, ["ST", "AM"]), p("Eberechi Eze", 87, ["AM", "LW"]), p("Christian Norgaard", 81, ["DM", "CM"]),
+    p("Noni Madueke", 84, ["RW", "LW"]), p("Mikel Merino", 84, ["CM", "DM"]), p("Martin Zubimendi", 87, ["DM", "CM"]), p("Max Dowman", 76, ["AM", "RW"]),
+    p("Gabriel Jesus", 84, ["ST", "RW"]), p("Gabriel Martinelli", 86, ["LW", "ST"]), p("Viktor Gyokeres", 89, ["ST"])
+  ])
+);
+
 configureTeamPool();
 
 const state = {

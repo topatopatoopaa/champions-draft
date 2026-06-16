@@ -145,6 +145,14 @@
           </div>
         </div>
 
+        <div class="team-projection" id="teamProjection"></div>
+
+        <div class="format-mode" role="tablist" aria-label="Formato de torneo">
+          <button class="format-mode-button active" data-format-mode="groups">7-0 · Fase de grupos</button>
+          <button class="format-mode-button" data-format-mode="league">15-0 · Fase de liga</button>
+        </div>
+        <p class="format-help" id="formatModeHelp">7-0 mantiene la fase de grupos de tres partidos.</p>
+
         <div class="sim-mode" role="tablist" aria-label="Modo de simulación">
           <button class="sim-mode-button active" data-sim-mode="manual">Normal</button>
           <button class="sim-mode-button" data-sim-mode="auto">Rápido</button>
@@ -173,6 +181,14 @@
 
     <dialog id="resultDialog">
       <div class="result-modal" id="resultModal"></div>
+    </dialog>
+
+    <dialog id="standingsDialog">
+      <div class="modal-head">
+        <h2 id="standingsTitle">Tabla</h2>
+        <button id="closeStandings" class="icon-button" aria-label="Cerrar">X</button>
+      </div>
+      <div class="standings-modal-body" id="standingsBody"></div>
     </dialog>
 
     <dialog id="dataDialog">

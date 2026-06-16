@@ -442,11 +442,13 @@ const state = {
   pendingPick: null,
   simRunning: false,
   simMode: "manual",
+  competitionMode: "groups",
   difficulty: "normal",
   rolling: false,
   needsThrow: true,
   tournamentStarted: false,
-  lastFinalCard: null
+  lastFinalCard: null,
+  standingsTables: []
 };
 
 const i18n = {
@@ -461,10 +463,38 @@ const i18n = {
     sampleLabel: "Ejemplo visual",
     viewCard: "Ver tarjeta",
     pickOnField: "Elegí un recuadro marcado en el campo.",
+    teamStatsTitle: "Estadísticas del equipo",
+    teamStatsSubtitle: "Proyección previa según tu XI y el formato elegido.",
+    winChance: "Prob. de ganar",
+    expectedPosition: "Posición esperada",
+    expectedLeagueRank: "Puesto {rank}/36",
+    expectedGroupRank: "{rank}/4 en grupo",
+    overallPower: "Media global",
     groupTable: "Tabla final del grupo",
+    formatGroups: "Fácil: grupos",
+    formatLeague: "Difícil: liga",
+    groupsHelp: "Fácil: fase de grupos de tres partidos y cruces ida/vuelta.",
+    leagueHelp: "Difícil: fase de liga con 8 partidos, tabla de 36 y cruces actuales.",
+    leagueTable: "Tabla final de la liga",
+    viewStandings: "Ver tabla completa",
+    directZone: "Clasifica directo",
+    playoffZone: "Play-off",
+    eliminatedZone: "Eliminado",
+    leagueMatch: "Liga partido {n}",
+    playLeague: "Jugar liga {n}",
+    leagueBye: "Top 8: pasas directo a octavos",
+    leaguePlayoff: "Puesto {rank}: vas al play-off",
+    leagueEliminated: "Puesto {rank}: eliminado en fase de liga",
+    knockoutPlayoff: "Play-off",
+    twoLegMatch: "{round} partido {n}",
+    aggregateResult: "Global: {team} {user} - {rival} {opponent}",
     played: "PJ",
     goalDiff: "DG",
     points: "Pts",
+    winsShort: "V",
+    drawsShort: "E",
+    lossesShort: "D",
+    teamHeader: "Equipo",
     scorers: "Goleadores",
     assists: "Asistidores",
     assist: "Asistencia",
@@ -497,6 +527,7 @@ const i18n = {
     eliminated: "Eliminado",
     won: "Ganaste la Champions",
     lostGroups: "Perdiste en fase de grupos",
+    lostLeague: "Perdiste en fase de liga",
     lostAgainst: "Perdiste contra",
     playAgain: "Jugar de nuevo",
     shareLink: "Compartir link",
@@ -505,6 +536,9 @@ const i18n = {
     shareTitle: "Mi carta de Ruta de Estrellas",
     buildYours: "Arma el tuyo",
     imageCta: "https://champions-draft-iota.vercel.app/ - arma el tuyo",
+    preparingImage: "Preparando imagen...",
+    imageDownloaded: "Imagen lista",
+    imageError: "No se pudo generar la imagen",
     attackAvg: "Media ataque",
     defenseAvg: "Media defensa",
     wins: "Victorias",
@@ -561,10 +595,38 @@ const i18n = {
     sampleLabel: "Visual example",
     viewCard: "View card",
     pickOnField: "Choose a highlighted slot on the pitch.",
+    teamStatsTitle: "Team stats",
+    teamStatsSubtitle: "Pre-tournament projection based on your XI and selected format.",
+    winChance: "Win chance",
+    expectedPosition: "Expected position",
+    expectedLeagueRank: "Rank {rank}/36",
+    expectedGroupRank: "{rank}/4 in group",
+    overallPower: "Overall average",
     groupTable: "Final group table",
+    formatGroups: "Easy: groups",
+    formatLeague: "Hard: league",
+    groupsHelp: "Easy: three-match group stage plus two-leg knockouts.",
+    leagueHelp: "Hard: league phase with 8 matches, a 36-team table and current knockouts.",
+    leagueTable: "Final league table",
+    viewStandings: "View full table",
+    directZone: "Direct qualification",
+    playoffZone: "Play-off",
+    eliminatedZone: "Eliminated",
+    leagueMatch: "League match {n}",
+    playLeague: "Play league match {n}",
+    leagueBye: "Top 8: straight into the round of 16",
+    leaguePlayoff: "Rank {rank}: into the play-off",
+    leagueEliminated: "Rank {rank}: eliminated in the league phase",
+    knockoutPlayoff: "Play-off",
+    twoLegMatch: "{round} leg {n}",
+    aggregateResult: "Aggregate: {team} {user} - {rival} {opponent}",
     played: "P",
     goalDiff: "GD",
     points: "Pts",
+    winsShort: "W",
+    drawsShort: "D",
+    lossesShort: "L",
+    teamHeader: "Team",
     scorers: "Scorers",
     assists: "Assists",
     assist: "Assist",
@@ -597,6 +659,7 @@ const i18n = {
     eliminated: "Eliminated",
     won: "You won the Champions League",
     lostGroups: "You lost in the group stage",
+    lostLeague: "You lost in the league phase",
     lostAgainst: "You lost against",
     playAgain: "Play again",
     shareLink: "Share link",
@@ -605,6 +668,9 @@ const i18n = {
     shareTitle: "My Ruta de Estrellas card",
     buildYours: "Build yours",
     imageCta: "https://champions-draft-iota.vercel.app/ - build yours",
+    preparingImage: "Preparing image...",
+    imageDownloaded: "Image ready",
+    imageError: "Could not generate image",
     attackAvg: "Attack average",
     defenseAvg: "Defense average",
     wins: "Wins",
@@ -661,10 +727,38 @@ const i18n = {
     sampleLabel: "Exemplo visual",
     viewCard: "Ver cartao",
     pickOnField: "Escolha um espaco marcado no campo.",
+    teamStatsTitle: "Estatísticas do time",
+    teamStatsSubtitle: "Projecao previa segundo seu XI e o formato escolhido.",
+    winChance: "Chance de ganhar",
+    expectedPosition: "Posicao esperada",
+    expectedLeagueRank: "Posicao {rank}/36",
+    expectedGroupRank: "{rank}/4 no grupo",
+    overallPower: "Media geral",
     groupTable: "Tabela final do grupo",
+    formatGroups: "Facil: grupos",
+    formatLeague: "Dificil: liga",
+    groupsHelp: "Facil: fase de grupos de tres partidas e mata-mata ida/volta.",
+    leagueHelp: "Dificil: fase de liga com 8 partidas, tabela de 36 e mata-mata atual.",
+    leagueTable: "Tabela final da liga",
+    viewStandings: "Ver tabela completa",
+    directZone: "Classifica direto",
+    playoffZone: "Play-off",
+    eliminatedZone: "Eliminado",
+    leagueMatch: "Liga partida {n}",
+    playLeague: "Jogar liga {n}",
+    leagueBye: "Top 8: voce vai direto para as oitavas",
+    leaguePlayoff: "Posicao {rank}: voce vai para o play-off",
+    leagueEliminated: "Posicao {rank}: eliminado na fase de liga",
+    knockoutPlayoff: "Play-off",
+    twoLegMatch: "{round} jogo {n}",
+    aggregateResult: "Agregado: {team} {user} - {rival} {opponent}",
     played: "J",
     goalDiff: "SG",
     points: "Pts",
+    winsShort: "V",
+    drawsShort: "E",
+    lossesShort: "D",
+    teamHeader: "Time",
     scorers: "Artilheiros",
     assists: "Assistencias",
     assist: "Assistencia",
@@ -697,6 +791,7 @@ const i18n = {
     eliminated: "Eliminado",
     won: "Voce ganhou a Champions",
     lostGroups: "Voce perdeu na fase de grupos",
+    lostLeague: "Voce perdeu na fase de liga",
     lostAgainst: "Voce perdeu contra",
     playAgain: "Jogar de novo",
     shareLink: "Compartilhar link",
@@ -705,6 +800,9 @@ const i18n = {
     shareTitle: "Meu cartao Ruta de Estrellas",
     buildYours: "Monte o seu",
     imageCta: "https://champions-draft-iota.vercel.app/ - monte o seu",
+    preparingImage: "Preparando imagem...",
+    imageDownloaded: "Imagem pronta",
+    imageError: "Nao foi possivel gerar a imagem",
     attackAvg: "Media ataque",
     defenseAvg: "Media defesa",
     wins: "Vitorias",
@@ -945,7 +1043,15 @@ function bindEvents() {
       renderSimMode();
     });
   });
+  document.querySelectorAll(".format-mode-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (state.simRunning || state.tournamentStarted) return;
+      state.competitionMode = button.dataset.formatMode;
+      renderFormatMode();
+    });
+  });
   document.querySelector("#closePick").addEventListener("click", () => document.querySelector("#positionDialog").close());
+  document.querySelector("#closeStandings").addEventListener("click", () => document.querySelector("#standingsDialog").close());
   document.querySelector("#showData").addEventListener("click", () => document.querySelector("#dataDialog").showModal());
   document.querySelector("#closeData").addEventListener("click", () => document.querySelector("#dataDialog").close());
 }
@@ -996,12 +1102,16 @@ function applyLanguage() {
   document.querySelector("#showData").textContent = tr("data");
   document.querySelector('[data-sim-mode="manual"]').textContent = tr("normal");
   document.querySelector('[data-sim-mode="auto"]').textContent = tr("fast");
+  document.querySelector('[data-format-mode="groups"]').textContent = tr("formatGroups");
+  document.querySelector('[data-format-mode="league"]').textContent = tr("formatLeague");
   document.querySelector("#startTournament").textContent = tr("startMatches");
   document.querySelector('[data-difficulty="normal"]').textContent = tr("normal");
   document.querySelector('[data-difficulty="hard"]').textContent = tr("hard");
+  renderFormatMode();
   document.querySelector("#simModeHelp").textContent = state.simMode === "manual" ? tr("manualHelp") : tr("fastHelp");
   document.querySelector("#positionDialog #pickTitle").textContent = tr("choosePosition");
   document.querySelector("#closePick").setAttribute("aria-label", tr("close"));
+  document.querySelector("#closeStandings").setAttribute("aria-label", tr("close"));
   document.querySelector("#dataDialog h2").textContent = tr("dataTitle");
   document.querySelector("#dataDialog p").textContent = tr("dataBody");
   const dataItems = document.querySelectorAll("#dataDialog li");
@@ -1009,6 +1119,7 @@ function applyLanguage() {
   dataItems[1].textContent = tr("dataLi2");
   dataItems[2].textContent = tr("dataLi3");
   document.querySelector("#closeData").setAttribute("aria-label", tr("close"));
+  renderTeamProjection();
 }
 
 function renderDifficultyOptions() {
@@ -1089,10 +1200,12 @@ function resetToSetup() {
   state.rollsLeft = 3;
   state.pendingPick = null;
   state.simRunning = false;
+  state.competitionMode = "groups";
   state.rolling = false;
   state.needsThrow = true;
   state.tournamentStarted = false;
   state.lastFinalCard = null;
+  state.standingsTables = [];
   backToDraft(false);
   document.querySelector(".app-shell").classList.remove("draft-mode");
   document.querySelector("#setupPanel").classList.remove("hidden");
@@ -1112,7 +1225,9 @@ function startGame() {
   state.needsThrow = true;
   state.rollsLeft = 3;
   state.tournamentStarted = false;
+  state.competitionMode = "groups";
   state.lastFinalCard = null;
+  state.standingsTables = [];
   document.querySelector("#setupPanel").classList.add("hidden");
   document.querySelector(".manager-panel").classList.remove("hidden");
   document.querySelector(".draft-panel").classList.remove("hidden");
@@ -1242,6 +1357,7 @@ function render() {
   renderCurrentTeam();
   renderNeeds();
   renderLeague();
+  renderFormatMode();
   renderSimMode();
 }
 
@@ -1261,7 +1377,20 @@ function renderMeta() {
   document.querySelector("#startTournament").disabled = state.simRunning || selectedCount() !== 11;
   document.querySelector("#backToDraft").classList.toggle("hidden", state.tournamentStarted);
   document.querySelector("#backToDraft").disabled = state.tournamentStarted;
+  renderFormatMode();
   renderSimMode();
+}
+
+function renderFormatMode() {
+  document.querySelectorAll(".format-mode-button").forEach((button) => {
+    button.classList.toggle("active", button.dataset.formatMode === state.competitionMode);
+    button.disabled = state.simRunning || state.tournamentStarted;
+  });
+  const help = document.querySelector("#formatModeHelp");
+  if (help) {
+    help.textContent = state.competitionMode === "league" ? tr("leagueHelp") : tr("groupsHelp");
+  }
+  renderTeamProjection();
 }
 
 function renderSimMode() {
@@ -1273,6 +1402,53 @@ function renderSimMode() {
   if (help) {
     help.textContent = state.simMode === "manual" ? tr("manualHelp") : tr("fastHelp");
   }
+}
+
+function renderTeamProjection() {
+  const root = document.querySelector("#teamProjection");
+  if (!root) return;
+  if (selectedCount() !== 11) {
+    root.innerHTML = "";
+    root.classList.add("hidden");
+    return;
+  }
+  const averages = teamAverages();
+  const projection = teamProjection(averages);
+  root.classList.remove("hidden");
+  root.innerHTML = `
+    <div>
+      <p class="eyebrow">${tr("teamStatsTitle")}</p>
+      <h3>${projection.formatLabel}</h3>
+      <span>${tr("teamStatsSubtitle")}</span>
+    </div>
+    <div class="projection-grid">
+      ${projectionStatHtml(tr("overallPower"), averages.overall, "primary")}
+      ${projectionStatHtml(tr("attackAvg"), averages.attack)}
+      ${projectionStatHtml(tr("defenseAvg"), averages.defense)}
+      ${projectionStatHtml(tr("winChance"), `${projection.winChance}%`, "accent")}
+      ${projectionStatHtml(tr("expectedPosition"), projection.expectedPosition)}
+    </div>
+  `;
+}
+
+function projectionStatHtml(label, value, tone = "") {
+  return `<span class="${tone}"><em>${label}</em><strong>${value}</strong></span>`;
+}
+
+function teamProjection(averages = teamAverages()) {
+  const strength = averages.overall * 0.68 + averages.attack * 0.17 + averages.defense * 0.15;
+  const isLeague = state.competitionMode === "league";
+  const chanceBase = isLeague
+    ? (strength - 74) * 1.85 - 9
+    : (strength - 73) * 2.25 + 4;
+  const winChance = clamp(2, isLeague ? 58 : 74, Math.round(chanceBase));
+  const leagueRank = clamp(1, 36, Math.round(34 - (strength - 72) * 1.35));
+  const groupRank = clamp(1, 4, Math.round(5 - (strength - 72) / 5.5));
+  return {
+    winChance,
+    expectedPosition: isLeague ? fmt("expectedLeagueRank", { rank: leagueRank }) : fmt("expectedGroupRank", { rank: groupRank }),
+    formatLabel: state.competitionMode === "league" ? tr("formatLeague") : tr("formatGroups")
+  };
 }
 
 function renderPitch() {
@@ -1473,7 +1649,18 @@ async function playTournament() {
   document.querySelector("#championsStart").classList.add("hidden");
   state.tournamentStarted = true;
   state.simRunning = true;
+  state.standingsTables = [];
   renderMeta();
+  const result = state.competitionMode === "league"
+    ? await playLeagueTournament()
+    : await playGroupTournament();
+  state.phase = "done";
+  state.simRunning = false;
+  renderMeta();
+  renderEndReview(result.alive, result.log);
+}
+
+async function playGroupTournament() {
   const userPower = averageRating();
   const opponents = weightedOpponents();
   const log = [];
@@ -1489,33 +1676,230 @@ async function playTournament() {
   const wins = groupResults.filter((item) => item.userGoals > item.rivalGoals).length;
   const draws = groupResults.filter((item) => item.userGoals === item.rivalGoals).length;
   const points = wins * 3 + draws;
-  alive = points >= 4 || wins >= 2;
+  const groupRows = groupTableRows(groupResults);
+  const userRow = groupRows.find((row) => row.isUser);
+  alive = userRow?.rank <= 2;
   addGroupVerdict(alive, wins, draws, points);
-  if (state.simMode === "manual") addGroupTable(groupResults);
+  addGroupTable(groupRows);
   await wait(1200);
   if (alive) {
     const rounds = [
-      { label: tr("roundOf16"), stage: "knockout", opponent: opponents[3], knockout: true },
-      { label: tr("quarterfinal"), stage: "knockout", opponent: opponents[4], knockout: true },
-      { label: tr("semifinal"), stage: "knockout", opponent: opponents[5], knockout: true },
+      { label: tr("roundOf16"), opponent: opponents[3] },
+      { label: tr("quarterfinal"), opponent: opponents[4] },
+      { label: tr("semifinal"), opponent: opponents[5] },
       { label: tr("finalRound"), stage: "knockout", opponent: opponents[6], knockout: true }
     ];
     for (let i = 0; i < rounds.length; i += 1) {
       const round = rounds[i];
       if (state.simMode === "manual") await waitForNextMatch(fmt("playRound", { round: round.label }));
-      const result = await playMatch(round, userPower);
-      log.push(result);
+      if (round.knockout) {
+        const result = await playMatch(round, userPower);
+        log.push(result);
+        renderBracketLog(log);
+        alive = result.userWon;
+      } else {
+        alive = await playTwoLegTie(round.label, round.opponent, userPower, log);
+      }
+      if (!alive) break;
+    }
+  }
+  return { alive, log };
+}
+
+async function playLeagueTournament() {
+  const userPower = averageRating();
+  const league = buildLeaguePhase(userPower);
+  const log = [];
+  for (let i = 0; i < league.rounds.length; i += 1) {
+    if (state.simMode === "manual" && i > 0) await waitForNextMatch(fmt("playLeague", { n: i + 1 }));
+    await playLeagueRound(league, i, userPower, log);
+  }
+  const table = rankedLeagueTable(league.teams);
+  addLeagueTable(table);
+  const userRow = table.find((row) => row.isUser);
+  let alive = userRow.rank <= 24;
+  const timeline = document.querySelector("#timeline");
+  if (userRow.rank <= 8) addTimeline(tr("leagueBye"), timeline, "user-goal");
+  else if (userRow.rank <= 24) addTimeline(fmt("leaguePlayoff", { rank: userRow.rank }), timeline, "user-goal");
+  else addTimeline(fmt("leagueEliminated", { rank: userRow.rank }), timeline, "rival-goal");
+  await wait(1200);
+  if (alive) {
+    const opponents = leagueKnockoutOpponents(table, userRow.rank);
+    if (userRow.rank > 8) {
+      if (state.simMode === "manual") await waitForNextMatch(fmt("playRound", { round: tr("knockoutPlayoff") }));
+      alive = await playTwoLegTie(tr("knockoutPlayoff"), opponents.playoff, userPower, log);
+    }
+    const twoLegRounds = [
+      { label: tr("roundOf16"), opponent: opponents.roundOf16 },
+      { label: tr("quarterfinal"), opponent: opponents.quarterfinal },
+      { label: tr("semifinal"), opponent: opponents.semifinal }
+    ];
+    for (const round of twoLegRounds) {
+      if (!alive) break;
+      if (state.simMode === "manual") await waitForNextMatch(fmt("playRound", { round: round.label }));
+      alive = await playTwoLegTie(round.label, round.opponent, userPower, log);
+    }
+    if (alive) {
+      if (state.simMode === "manual") await waitForNextMatch(fmt("playRound", { round: tr("finalRound") }));
+      const finalResult = await playMatch({ label: tr("finalRound"), stage: "knockout", opponent: opponents.final, knockout: true }, userPower);
+      log.push(finalResult);
       renderBracketLog(log);
-      if (!result.userWon) {
-        alive = false;
+      alive = finalResult.userWon;
+    }
+  }
+  return { alive, log };
+}
+
+function buildLeaguePhase(userPower) {
+  const pickedTeams = shuffle(teamPool).slice(0, 35);
+  const teams = [
+    leagueTeam("user-xi", tr("yourXI"), "", userPower, null, true),
+    ...pickedTeams.map((teamItem, index) => leagueTeam(`club-${index}`, teamItem.name, teamItem.season, teamItem.power, teamItem, false))
+  ];
+  return { teams, rounds: createLeagueRounds(teams) };
+}
+
+function leagueTeam(id, name, season, power, source, isUser) {
+  return { id, name, season, power, source, isUser, played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
+}
+
+function createLeagueRounds(teams) {
+  const rounds = [];
+  const usedPairs = new Set();
+  for (let roundIndex = 0; roundIndex < 8; roundIndex += 1) {
+    let pairs = [];
+    for (let attempt = 0; attempt < 80; attempt += 1) {
+      const shuffled = shuffle(teams);
+      const currentPairs = [];
+      let valid = true;
+      for (let i = 0; i < shuffled.length; i += 2) {
+        const a = shuffled[i];
+        const b = shuffled[i + 1];
+        const key = pairKey(a, b);
+        if (usedPairs.has(key)) {
+          valid = false;
+          break;
+        }
+        currentPairs.push([a, b]);
+      }
+      if (valid) {
+        pairs = currentPairs;
+        break;
+      }
+      if (attempt === 79) {
+        pairs = shuffled.reduce((list, _, index) => {
+          if (index % 2 === 0) list.push([shuffled[index], shuffled[index + 1]]);
+          return list;
+        }, []);
         break;
       }
     }
+    pairs.forEach(([a, b]) => usedPairs.add(pairKey(a, b)));
+    rounds.push(pairs);
   }
-  state.phase = "done";
-  state.simRunning = false;
-  renderMeta();
-  renderEndReview(alive, log);
+  return rounds;
+}
+
+function pairKey(a, b) {
+  return [a.id, b.id].sort().join("|");
+}
+
+async function playLeagueRound(league, roundIndex, userPower, log) {
+  const pairs = league.rounds[roundIndex];
+  for (const [a, b] of pairs) {
+    if (a.isUser || b.isUser) continue;
+    const score = neutralScore(a.power, b.power);
+    applyLeagueResult(a, b, score.a, score.b);
+  }
+  const userPair = pairs.find(([a, b]) => a.isUser || b.isUser);
+  const opponentRow = userPair[0].isUser ? userPair[1] : userPair[0];
+  const result = await playMatch({ label: fmt("leagueMatch", { n: roundIndex + 1 }), stage: "league", opponent: opponentRow.source, knockout: false }, userPower);
+  applyLeagueResult(league.teams.find((team) => team.isUser), opponentRow, result.userGoals, result.rivalGoals);
+  log.push(result);
+  renderBracketLog(log);
+}
+
+function neutralScore(aPower, bPower) {
+  const shock = shockScore(aPower, bPower);
+  if (shock) return { a: shock.user, b: shock.rival };
+  const diff = aPower - bPower;
+  return {
+    a: sampleGoals(clamp(0.25, 3.1, 1.15 + diff / 15)),
+    b: sampleGoals(clamp(0.25, 3.1, 1.08 - diff / 15))
+  };
+}
+
+function applyLeagueResult(a, b, aGoals, bGoals) {
+  a.played += 1;
+  b.played += 1;
+  a.goalsFor += aGoals;
+  a.goalsAgainst += bGoals;
+  b.goalsFor += bGoals;
+  b.goalsAgainst += aGoals;
+  if (aGoals > bGoals) {
+    a.wins += 1;
+    b.losses += 1;
+    a.points += 3;
+  } else if (bGoals > aGoals) {
+    b.wins += 1;
+    a.losses += 1;
+    b.points += 3;
+  } else {
+    a.draws += 1;
+    b.draws += 1;
+    a.points += 1;
+    b.points += 1;
+  }
+}
+
+function rankedLeagueTable(teams) {
+  return teams
+    .slice()
+    .sort((a, b) => b.points - a.points || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) || b.goalsFor - a.goalsFor || b.wins - a.wins || b.power - a.power)
+    .map((teamItem, index) => ({ ...teamItem, rank: index + 1 }));
+}
+
+function addLeagueTable(rows) {
+  addStandingsButton(rows, tr("leagueTable"), "league");
+}
+
+function leagueKnockoutOpponents(table, userRank) {
+  const used = new Set();
+  const rows = table.filter((row) => !row.isUser && row.source);
+  const pick = (minRank, maxRank) => {
+    const candidates = rows.filter((row) => row.rank >= minRank && row.rank <= maxRank && !used.has(teamKey(row.source)));
+    const fallback = rows.filter((row) => !used.has(teamKey(row.source)));
+    const chosen = shuffle(candidates.length ? candidates : fallback)[0];
+    if (chosen) used.add(teamKey(chosen.source));
+    return chosen?.source || weightedOpponents()[0];
+  };
+  return {
+    playoff: userRank <= 16 ? pick(17, 24) : pick(9, 16),
+    roundOf16: pick(1, 16),
+    quarterfinal: pick(1, 12),
+    semifinal: pick(1, 8),
+    final: pick(1, 6)
+  };
+}
+
+async function playTwoLegTie(label, opponent, userPower, log) {
+  const first = await playMatch({ label: fmt("twoLegMatch", { round: label, n: 1 }), stage: "knockout", opponent, knockout: false }, userPower);
+  log.push(first);
+  renderBracketLog(log);
+  if (state.simMode === "manual") await waitForNextMatch(fmt("twoLegMatch", { round: label, n: 2 }));
+  const second = await playMatch({ label: fmt("twoLegMatch", { round: label, n: 2 }), stage: "knockout", opponent, knockout: false }, userPower);
+  const userAggregate = first.userGoals + second.userGoals;
+  const rivalAggregate = first.rivalGoals + second.rivalGoals;
+  second.userWon = userAggregate > rivalAggregate;
+  if (userAggregate === rivalAggregate) {
+    second.penalties = await playPenalties(opponent);
+    second.userWon = second.penalties.user > second.penalties.rival;
+  }
+  addTimeline(fmt("aggregateResult", { team: tr("yourXI"), user: userAggregate, rival: rivalAggregate, opponent: opponent.name }));
+  log.push(second);
+  renderBracketLog(log);
+  await wait(650);
+  return second.userWon;
 }
 
 function weightedOpponents() {
@@ -1695,10 +2079,16 @@ function addGroupVerdict(alive, wins, draws, points) {
   addTimeline(alive ? fmt("qualified", { points, wins, draws }) : fmt("eliminatedGroupsVerdict", { points, wins, draws }));
 }
 
-function addGroupTable(groupResults) {
+function groupTableRows(groupResults) {
   const rivalRows = groupResults.map((item) => ({
     name: item.opponent.name,
+    season: item.opponent.season,
+    source: item.opponent,
+    isUser: false,
     played: 1,
+    wins: item.rivalGoals > item.userGoals ? 1 : 0,
+    draws: item.rivalGoals === item.userGoals ? 1 : 0,
+    losses: item.rivalGoals < item.userGoals ? 1 : 0,
     goalsFor: item.rivalGoals,
     goalsAgainst: item.userGoals,
     points: item.rivalGoals > item.userGoals ? 3 : item.rivalGoals === item.userGoals ? 1 : 0
@@ -1715,25 +2105,25 @@ function addGroupTable(groupResults) {
   const rows = [
     {
       name: tr("yourXI"),
+      season: "",
+      source: null,
+      isUser: true,
       played: 3,
+      wins: groupResults.filter((item) => item.userGoals > item.rivalGoals).length,
+      draws: groupResults.filter((item) => item.userGoals === item.rivalGoals).length,
+      losses: groupResults.filter((item) => item.userGoals < item.rivalGoals).length,
       goalsFor: groupResults.reduce((sum, item) => sum + item.userGoals, 0),
       goalsAgainst: groupResults.reduce((sum, item) => sum + item.rivalGoals, 0),
       points: groupResults.reduce((sum, item) => sum + (item.userGoals > item.rivalGoals ? 3 : item.userGoals === item.rivalGoals ? 1 : 0), 0)
     },
     ...rivalRows
-  ].sort((a, b) => b.points - a.points || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) || b.goalsFor - a.goalsFor);
-  const table = document.createElement("div");
-  table.className = "group-table";
-  table.innerHTML = `
-    <h4>${tr("groupTable")}</h4>
-    <table>
-      <thead><tr><th></th><th>${tr("played")}</th><th>GF</th><th>GC</th><th>${tr("goalDiff")}</th><th>${tr("points")}</th></tr></thead>
-      <tbody>
-        ${rows.map((row, index) => `<tr class="${row.name === tr("yourXI") ? "user-row" : ""}"><td>${index + 1}. ${row.name}</td><td>${row.played}</td><td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalsFor - row.goalsAgainst}</td><td>${row.points}</td></tr>`).join("")}
-      </tbody>
-    </table>
-  `;
-  document.querySelector("#timeline")?.append(table);
+  ].sort((a, b) => b.points - a.points || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) || b.goalsFor - a.goalsFor)
+    .map((row, index) => ({ ...row, rank: index + 1 }));
+  return rows;
+}
+
+function addGroupTable(rows) {
+  addStandingsButton(rows, tr("groupTable"), "group");
 }
 
 function applyTableMatch(a, b, aGoals, bGoals) {
@@ -1743,12 +2133,79 @@ function applyTableMatch(a, b, aGoals, bGoals) {
   a.goalsAgainst += bGoals;
   b.goalsFor += bGoals;
   b.goalsAgainst += aGoals;
-  if (aGoals > bGoals) a.points += 3;
-  else if (bGoals > aGoals) b.points += 3;
-  else {
+  if (aGoals > bGoals) {
+    a.wins += 1;
+    b.losses += 1;
+    a.points += 3;
+  } else if (bGoals > aGoals) {
+    b.wins += 1;
+    a.losses += 1;
+    b.points += 3;
+  } else {
+    a.draws += 1;
+    b.draws += 1;
     a.points += 1;
     b.points += 1;
   }
+}
+
+function addStandingsButton(rows, title, mode) {
+  state.standingsTables.push({ rows, title, mode });
+  renderStandingsButtons();
+}
+
+function renderStandingsButtons() {
+  const bracket = document.querySelector("#bracket");
+  if (!bracket || !state.standingsTables.length) return;
+  bracket.querySelectorAll(".standings-card").forEach((item) => item.remove());
+  state.standingsTables.forEach((table, index) => {
+    const holder = document.createElement("div");
+    holder.className = "round-card standings-card";
+    holder.innerHTML = `<h3>${table.title}</h3><button class="standings-button">${tr("viewStandings")}</button>`;
+    holder.querySelector("button").addEventListener("click", () => openStandingsModal(table.rows, table.title, table.mode));
+    bracket.prepend(holder);
+  });
+}
+
+function openStandingsModal(rows, title, mode) {
+  document.querySelector("#standingsTitle").textContent = title;
+  document.querySelector("#standingsBody").innerHTML = standingsTableHtml(rows, mode);
+  document.querySelector("#standingsDialog").showModal();
+}
+
+function standingsTableHtml(rows, mode) {
+  return `
+    <div class="standings-legend">
+      <span class="zone-direct">${tr("directZone")}</span>
+      ${mode === "league" ? `<span class="zone-playoff">${tr("playoffZone")}</span>` : ""}
+      <span class="zone-out">${tr("eliminatedZone")}</span>
+    </div>
+    <div class="standings-scroll">
+      <table class="standings-table">
+        <thead>
+          <tr><th>#</th><th></th><th>${tr("teamHeader")}</th><th>${tr("played")}</th><th>${tr("winsShort")}</th><th>${tr("drawsShort")}</th><th>${tr("lossesShort")}</th><th>GF</th><th>GC</th><th>${tr("goalDiff")}</th><th>${tr("points")}</th></tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr class="${row.isUser ? "user-row" : ""} ${standingsZoneClass(row, mode)}">
+              <td>${row.rank}</td>
+              <td><img src="${row.source ? crestUrl(row.source) : fallbackCrest(row.name)}" alt="${row.name}"></td>
+              <td><strong>${row.name}</strong>${row.season ? `<em>${row.season}</em>` : ""}</td>
+              <td>${row.played}</td><td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
+              <td>${row.goalsFor}</td><td>${row.goalsAgainst}</td><td>${row.goalsFor - row.goalsAgainst}</td><td>${row.points}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function standingsZoneClass(row, mode) {
+  if (mode === "group") return row.rank <= 2 ? "zone-direct" : "zone-out";
+  if (row.rank <= 8) return "zone-direct";
+  if (row.rank <= 24) return "zone-playoff";
+  return "zone-out";
 }
 
 function renderEndReview(won, log) {
@@ -1764,6 +2221,7 @@ function openChampionsPage() {
   document.querySelector(".app-shell").classList.add("hidden");
   document.querySelector("#championsPage").classList.remove("hidden");
   document.querySelector("#championsStart").classList.toggle("hidden", state.simRunning);
+  renderTeamProjection();
   window.location.hash = "champions";
 }
 
@@ -1792,31 +2250,24 @@ function renderBracketLog(log) {
       </div>
     </div>
   `).join("");
+  renderStandingsButtons();
 }
 
 function showFinal(won, log) {
   const last = log[log.length - 1];
   const lostInGroups = !won && last?.stage === "group";
+  const lostInLeague = !won && last?.stage === "league";
   const stats = tournamentStats(log);
   const averages = teamAverages();
   const contribution = contributionStats(log);
-  const title = won ? tr("won") : lostInGroups ? tr("lostGroups") : `${tr("lostAgainst")} ${last.opponent.name}`;
+  const title = won ? tr("won") : lostInGroups ? tr("lostGroups") : lostInLeague ? tr("lostLeague") : `${tr("lostAgainst")} ${last.opponent.name}`;
   state.lastFinalCard = { won, title, stats, averages, contribution, players: selectedPlayers(), formation: state.formationName };
   const root = document.querySelector("#resultModal");
   root.className = `result-modal ${won ? "champion-modal" : ""}`;
   root.innerHTML = `
     <p class="eyebrow">${won ? tr("champion") : tr("eliminated")}</p>
     <h2>${title}</h2>
-    <div class="final-stats">
-      <span>${tr("avg")} <strong>${averages.overall}</strong></span>
-      <span>${tr("attackAvg")} <strong>${averages.attack}</strong></span>
-      <span>${tr("defenseAvg")} <strong>${averages.defense}</strong></span>
-      <span>${tr("wins")} <strong>${stats.wins}</strong></span>
-      <span>${tr("draws")} <strong>${stats.draws}</strong></span>
-      <span>${tr("losses")} <strong>${stats.losses}</strong></span>
-      <span>${tr("goalsFor")} <strong>${stats.goalsFor}</strong></span>
-      <span>${tr("goalsAgainst")} <strong>${stats.goalsAgainst}</strong></span>
-    </div>
+    ${finalStatsHtml(averages, stats)}
     <div class="contribution-grid">
       ${contributionTable(tr("scorers"), contribution.scorers)}
       ${contributionTable(tr("assists"), contribution.assists)}
@@ -1835,6 +2286,23 @@ function showFinal(won, log) {
   document.querySelector("#resultDialog").showModal();
 }
 
+function finalStatsHtml(averages, stats) {
+  return `
+    <div class="final-stats final-stats-featured">
+      <span class="stat-hero"><em>${tr("avg")}</em><strong>${averages.overall}</strong></span>
+      <span><em>${tr("attackAvg")}</em><strong>${averages.attack}</strong></span>
+      <span><em>${tr("defenseAvg")}</em><strong>${averages.defense}</strong></span>
+    </div>
+    <div class="record-strip">
+      <span><em>${tr("wins")}</em><strong>${stats.wins}</strong></span>
+      <span><em>${tr("draws")}</em><strong>${stats.draws}</strong></span>
+      <span><em>${tr("losses")}</em><strong>${stats.losses}</strong></span>
+      <span><em>${tr("goalsFor")}</em><strong>${stats.goalsFor}</strong></span>
+      <span><em>${tr("goalsAgainst")}</em><strong>${stats.goalsAgainst}</strong></span>
+    </div>
+  `;
+}
+
 async function shareFinalLink() {
   if (!state.lastFinalCard) return;
   const text = finalShareText(state.lastFinalCard);
@@ -1846,23 +2314,63 @@ async function shareFinalLink() {
 
 async function shareFinalImage() {
   if (!state.lastFinalCard) return;
-  const blob = await finalShareImageBlob();
-  const file = new File([blob], "ruta-de-estrellas.png", { type: "image/png" });
-  if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+  const button = document.querySelector("#shareFinalImage");
+  const originalText = button?.textContent || tr("shareImage");
+  if (button) {
+    button.disabled = true;
+    button.textContent = tr("preparingImage");
+  }
+  clearShareStatus();
+  try {
+    let blob;
     try {
-      await navigator.share({ title: tr("shareTitle"), text: finalShareText(state.lastFinalCard), files: [file] });
-      return;
+      blob = await finalShareImageBlob({ withCrests: true });
     } catch (error) {
-      // Fall through to download.
+      blob = await finalShareImageBlob({ withCrests: false });
+    }
+    const file = new File([blob], "ruta-de-estrellas.png", { type: "image/png" });
+    if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+      try {
+        await navigator.share({ title: tr("shareTitle"), text: finalShareText(state.lastFinalCard), files: [file] });
+        showShareStatus(tr("imageDownloaded"));
+        return;
+      } catch (error) {
+        // Fall through to download.
+      }
+    }
+    downloadBlob(blob, "ruta-de-estrellas.png");
+    showShareStatus(tr("imageDownloaded"));
+  } catch (error) {
+    console.error(error);
+    showShareStatus(tr("imageError"), true);
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
     }
   }
+}
+
+function downloadBlob(blob, filename) {
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "ruta-de-estrellas.png";
+  link.download = filename;
   document.body.append(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+}
+
+function clearShareStatus() {
+  document.querySelector(".share-status")?.remove();
+}
+
+function showShareStatus(text, isError = false) {
+  clearShareStatus();
+  const status = document.createElement("p");
+  status.className = `share-status ${isError ? "error" : ""}`;
+  status.textContent = text;
+  document.querySelector(".share-actions")?.after(status);
 }
 
 function finalShareUrl(card) {
@@ -1935,55 +2443,124 @@ function finalShareText(card) {
   return `${tr("shareTitle")} - ${card.title}\n${tr("avg")}: ${card.averages.overall} | ${tr("attackAvg")}: ${card.averages.attack} | ${tr("defenseAvg")}: ${card.averages.defense}\n${record} | ${tr("goalsFor")}: ${card.stats.goalsFor} | ${tr("goalsAgainst")}: ${card.stats.goalsAgainst}`;
 }
 
-async function finalShareImageBlob() {
+async function finalShareImageBlob(options = {}) {
+  const withCrests = options.withCrests !== false;
   const card = state.lastFinalCard;
   const canvas = document.createElement("canvas");
   canvas.width = 1080;
-  canvas.height = 1500;
+  canvas.height = 1600;
   const ctx = canvas.getContext("2d");
-  const bg = ctx.createLinearGradient(0, 0, 1080, 1500);
-  bg.addColorStop(0, card.won ? "#fff1ad" : "#071b47");
-  bg.addColorStop(0.5, card.won ? "#d7b56d" : "#1557ff");
-  bg.addColorStop(1, card.won ? "#8b651c" : "#0f8fff");
+  const bg = ctx.createLinearGradient(0, 0, 1080, 1600);
+  bg.addColorStop(0, card.won ? "#fff2a8" : "#05112e");
+  bg.addColorStop(0.44, card.won ? "#d9b45f" : "#123d92");
+  bg.addColorStop(1, card.won ? "#6f4b11" : "#061536");
   ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, 1080, 1500);
-  drawRoundRect(ctx, 70, 60, 940, 1360, 34, "rgba(255,255,255,0.94)");
-  ctx.fillStyle = "#071b47";
+  ctx.fillRect(0, 0, 1080, 1600);
+  drawShareTexture(ctx, card.won);
+  drawRoundRect(ctx, 62, 54, 956, 1492, 34, "rgba(255,255,255,0.95)");
+  const header = ctx.createLinearGradient(92, 84, 988, 270);
+  header.addColorStop(0, "#061536");
+  header.addColorStop(0.62, "#123d92");
+  header.addColorStop(1, card.won ? "#d8b76c" : "#0f8fff");
+  drawRoundRect(ctx, 92, 84, 896, 220, 24, header);
+  ctx.fillStyle = "rgba(255,255,255,0.12)";
+  ctx.fillRect(92, 206, 896, 2);
+  ctx.fillStyle = card.won ? "#ffe59a" : "#d8b76c";
   ctx.textAlign = "center";
-  ctx.font = "900 34px Arial";
-  ctx.fillText("Ruta de Estrellas", 540, 130);
-  ctx.font = "900 54px Arial";
-  drawWrappedText(ctx, card.title, 540, 205, 850, 60);
-  const stats = [
-    [tr("avg"), card.averages.overall],
-    [tr("attackAvg"), card.averages.attack],
-    [tr("defenseAvg"), card.averages.defense],
-    [tr("wins"), card.stats.wins],
-    [tr("draws"), card.stats.draws],
-    [tr("losses"), card.stats.losses],
-    [tr("goalsFor"), card.stats.goalsFor],
-    [tr("goalsAgainst"), card.stats.goalsAgainst]
-  ];
-  stats.forEach(([label, value], index) => {
-    const x = 115 + (index % 4) * 215;
-    const y = 325 + Math.floor(index / 4) * 88;
-    drawRoundRect(ctx, x, y, 190, 64, 12, "#f4f7ff");
-    ctx.fillStyle = "#4c5f86";
-    ctx.font = "800 18px Arial";
-    ctx.fillText(label.toUpperCase(), x + 95, y + 24);
-    ctx.fillStyle = "#071b47";
-    ctx.font = "900 26px Arial";
-    ctx.fillText(String(value), x + 95, y + 52);
-  });
-  drawContributionImageSection(ctx, tr("scorers"), card.contribution.scorers, 115, 520);
-  drawContributionImageSection(ctx, tr("assists"), card.contribution.assists, 565, 520);
-  drawPitchImage(ctx, card.players, 155, 760, 770, 465);
-  drawRoundRect(ctx, 115, 1285, 850, 56, 14, "#1557ff");
+  ctx.font = "900 30px Arial";
+  ctx.fillText("RUTA DE ESTRELLAS", 540, 136);
   ctx.fillStyle = "white";
-  ctx.font = "900 24px Arial";
-  ctx.fillText(tr("imageCta"), 540, 1321);
+  ctx.font = "900 52px Arial";
+  drawWrappedText(ctx, card.title, 540, 206, 790, 54);
+
+  drawShareAverages(ctx, card.averages, 92, 340);
+  drawShareRecord(ctx, card.stats, 92, 506);
+  drawContributionImageSection(ctx, tr("scorers"), card.contribution.scorers, 92, 625);
+  drawContributionImageSection(ctx, tr("assists"), card.contribution.assists, 548, 625);
+  await drawPitchImage(ctx, card.players, 128, 855, 824, 540, card.formation, { withCrests });
+  drawRoundRect(ctx, 132, 1435, 816, 66, 18, "#1557ff");
+  ctx.fillStyle = "white";
+  ctx.font = "900 25px Arial";
+  ctx.fillText(tr("imageCta"), 540, 1477);
+  return canvasToBlob(canvas);
+}
+
+function canvasToBlob(canvas) {
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("No se pudo generar la imagen")), "image/png", 0.95);
+    try {
+      canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("No se pudo generar la imagen")), "image/png", 0.95);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+function drawShareTexture(ctx, won) {
+  ctx.save();
+  ctx.globalAlpha = won ? 0.16 : 0.22;
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 2;
+  for (let i = -240; i < 1160; i += 120) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i + 420, 1600);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = won ? 0.16 : 0.12;
+  ctx.fillStyle = won ? "#ffffff" : "#d8b76c";
+  for (let i = 0; i < 34; i += 1) {
+    const x = 80 + ((i * 157) % 920);
+    const y = 90 + ((i * 223) % 1400);
+    ctx.beginPath();
+    ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawShareAverages(ctx, averages, x, y) {
+  drawRoundRect(ctx, x, y, 292, 128, 18, "#071b47");
+  ctx.fillStyle = "#d8b76c";
+  ctx.textAlign = "left";
+  ctx.font = "900 22px Arial";
+  ctx.fillText(tr("avg").toUpperCase(), x + 22, y + 38);
+  ctx.fillStyle = "white";
+  ctx.font = "900 58px Arial";
+  ctx.fillText(String(averages.overall), x + 22, y + 98);
+  [
+    [tr("attackAvg"), averages.attack],
+    [tr("defenseAvg"), averages.defense]
+  ].forEach(([label, value], index) => {
+    const xx = x + 320 + index * 258;
+    drawRoundRect(ctx, xx, y, 236, 128, 18, "#f3f7ff");
+    ctx.fillStyle = "#60718f";
+    ctx.font = "900 19px Arial";
+    ctx.fillText(label.toUpperCase(), xx + 20, y + 39);
+    ctx.fillStyle = "#071b47";
+    ctx.font = "900 46px Arial";
+    ctx.fillText(String(value), xx + 20, y + 98);
+  });
+  ctx.textAlign = "center";
+}
+
+function drawShareRecord(ctx, stats, x, y) {
+  const items = [
+    [tr("wins"), stats.wins, "#11a36a"],
+    [tr("draws"), stats.draws, "#d8b76c"],
+    [tr("losses"), stats.losses, "#d94b5a"],
+    [tr("goalsFor"), stats.goalsFor, "#1557ff"],
+    [tr("goalsAgainst"), stats.goalsAgainst, "#071b47"]
+  ];
+  items.forEach(([label, value, color], index) => {
+    const xx = x + index * 180;
+    drawRoundRect(ctx, xx, y, 164, 80, 16, "#ffffff");
+    ctx.fillStyle = color;
+    ctx.textAlign = "center";
+    ctx.font = "900 30px Arial";
+    ctx.fillText(String(value), xx + 82, y + 36);
+    ctx.fillStyle = "#60718f";
+    ctx.font = "900 15px Arial";
+    ctx.fillText(label.toUpperCase(), xx + 82, y + 62);
   });
 }
 
@@ -2006,8 +2583,17 @@ function drawContributionImageSection(ctx, title, rows, x, y) {
   ctx.textAlign = "center";
 }
 
-function drawPitchImage(ctx, players, x, y, w, h) {
-  drawRoundRect(ctx, x, y, w, h, 16, "#17824e");
+async function drawPitchImage(ctx, players, x, y, w, h, formationName, options = {}) {
+  const withCrests = options.withCrests !== false;
+  const pitchGradient = ctx.createLinearGradient(x, y, x, y + h);
+  pitchGradient.addColorStop(0, "#1ca361");
+  pitchGradient.addColorStop(0.5, "#147d4d");
+  pitchGradient.addColorStop(1, "#0f5f3e");
+  drawRoundRect(ctx, x, y, w, h, 18, pitchGradient);
+  ctx.fillStyle = "rgba(255,255,255,0.06)";
+  for (let stripe = 0; stripe < 6; stripe += 1) {
+    if (stripe % 2 === 0) ctx.fillRect(x + 10, y + 10 + stripe * ((h - 20) / 6), w - 20, (h - 20) / 6);
+  }
   ctx.strokeStyle = "rgba(255,255,255,0.74)";
   ctx.lineWidth = 3;
   ctx.strokeRect(x + 10, y + 10, w - 20, h - 20);
@@ -2018,21 +2604,61 @@ function drawPitchImage(ctx, players, x, y, w, h) {
   ctx.beginPath();
   ctx.arc(x + w / 2, y + h / 2, 58, 0, Math.PI * 2);
   ctx.stroke();
-  const sorted = [...players].sort((a, b) => positionShareRank(a.chosenPosition) - positionShareRank(b.chosenPosition));
-  const rows = [sorted.slice(0, 1), sorted.slice(1, 5), sorted.slice(5, 8), sorted.slice(8, 11)];
-  rows.forEach((row, rowIndex) => {
-    const yy = y + 42 + rowIndex * 128;
-    row.forEach((player, index) => {
+  ctx.strokeRect(x + w * 0.28, y + 10, w * 0.44, h * 0.15);
+  ctx.strokeRect(x + w * 0.28, y + h - 10 - h * 0.15, w * 0.44, h * 0.15);
+  const rows = shareFormationRows(players, formationName);
+  const gap = (h - 92) / Math.max(1, rows.length - 1);
+  for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
+    const row = rows[rowIndex];
+    const yy = y + 46 + rowIndex * gap;
+    for (let index = 0; index < row.length; index += 1) {
+      const player = row[index];
       const xx = x + (w / (row.length + 1)) * (index + 1);
-      drawRoundRect(ctx, xx - 70, yy - 20, 140, 44, 10, "rgba(255,255,255,0.92)");
+      drawRoundRect(ctx, xx - 74, yy - 26, 148, 54, 13, "rgba(255,255,255,0.94)");
+      const crest = withCrests ? await loadCanvasImage(crestUrl(player.teamName)) : null;
+      if (crest) ctx.drawImage(crest, xx - 62, yy - 15, 28, 28);
       ctx.fillStyle = "#071b47";
-      ctx.font = "900 15px Arial";
-      ctx.fillText(trimCanvasText(ctx, shortPlayerName(player.name), 120), xx, yy - 2);
+      ctx.font = "900 13px Arial";
+      ctx.textAlign = crest ? "left" : "center";
+      ctx.fillText(trimCanvasText(ctx, shortPlayerName(player.name), crest ? 92 : 124), crest ? xx - 26 : xx, yy - 3);
       ctx.fillStyle = "#4c5f86";
       ctx.font = "800 12px Arial";
-      ctx.fillText(posLabel(player.chosenPosition), xx, yy + 15);
-    });
+      ctx.fillText(posLabel(player.chosenPosition), crest ? xx - 26 : xx, yy + 15);
+      ctx.textAlign = "center";
+    }
+  }
+}
+
+function loadCanvasImage(src) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    let settled = false;
+    const done = (value) => {
+      if (settled) return;
+      settled = true;
+      resolve(value);
+    };
+    const timer = setTimeout(() => done(null), 1400);
+    image.onload = () => {
+      clearTimeout(timer);
+      done(image);
+    };
+    image.onerror = () => {
+      clearTimeout(timer);
+      done(null);
+    };
+    image.src = src;
   });
+}
+
+function shareFormationRows(players, formationName) {
+  const available = [...players];
+  const shape = formations[formationName] || formations[state.formationName] || [["LW", "ST", "RW"], ["CM", "CM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]];
+  return shape.map((line) => line.map((position) => {
+    const index = available.findIndex((player) => player.chosenPosition === position);
+    const player = index >= 0 ? available.splice(index, 1)[0] : available.shift();
+    return player;
+  }).filter(Boolean));
 }
 
 function positionShareRank(position) {
@@ -2088,16 +2714,7 @@ function renderSharedCardFromUrl() {
     root.innerHTML = `
       <p class="eyebrow">${payload.r === 1 ? tr("champion") : tr("eliminated")}</p>
       <h2>${safe(payload.t)}</h2>
-      <div class="final-stats">
-        <span>${tr("avg")} <strong>${averages.overall}</strong></span>
-        <span>${tr("attackAvg")} <strong>${averages.attack}</strong></span>
-        <span>${tr("defenseAvg")} <strong>${averages.defense}</strong></span>
-        <span>${tr("wins")} <strong>${stats.wins}</strong></span>
-        <span>${tr("draws")} <strong>${stats.draws}</strong></span>
-        <span>${tr("losses")} <strong>${stats.losses}</strong></span>
-        <span>${tr("goalsFor")} <strong>${stats.goalsFor}</strong></span>
-        <span>${tr("goalsAgainst")} <strong>${stats.goalsAgainst}</strong></span>
-      </div>
+      ${finalStatsHtml(averages, stats)}
       <div class="shared-team">
         ${(payload.p || []).map(([name, position, teamName]) => `<p><strong>${safe(posLabel(position))}</strong><span>${safe(name)}</span><em>${safe(teamName)}</em></p>`).join("")}
       </div>

@@ -622,9 +622,17 @@ const i18n = {
     teamStatsTitle: "Estadísticas del equipo",
     teamStatsSubtitle: "Proyección previa según tu XI y el formato elegido.",
     winChance: "Prob. de ganar",
-    expectedPosition: "Posición esperada",
+    expectedPosition: "Instancia esperada",
     expectedLeagueRank: "Puesto {rank}/36",
     expectedGroupRank: "{rank}/4 en grupo",
+    stageChampion: "Campeón",
+    stageFinal: "Final",
+    stageSemifinal: "Semifinal",
+    stageQuarterfinal: "Cuartos",
+    stageRoundOf16: "Octavos",
+    stagePlayoff: "Play-off",
+    stageGroupOut: "Eliminado en grupos",
+    stageLeagueOut: "Eliminado en liga",
     overallPower: "Media global",
     groupTable: "Tabla final del grupo",
     formatGroups: "Fácil: grupos",
@@ -754,9 +762,17 @@ const i18n = {
     teamStatsTitle: "Team stats",
     teamStatsSubtitle: "Pre-tournament projection based on your XI and selected format.",
     winChance: "Win chance",
-    expectedPosition: "Expected position",
+    expectedPosition: "Expected stage",
     expectedLeagueRank: "Rank {rank}/36",
     expectedGroupRank: "{rank}/4 in group",
+    stageChampion: "Champion",
+    stageFinal: "Final",
+    stageSemifinal: "Semifinal",
+    stageQuarterfinal: "Quarterfinals",
+    stageRoundOf16: "Round of 16",
+    stagePlayoff: "Play-off",
+    stageGroupOut: "Out in groups",
+    stageLeagueOut: "Out in league phase",
     overallPower: "Overall average",
     groupTable: "Final group table",
     formatGroups: "Easy: groups",
@@ -886,9 +902,17 @@ const i18n = {
     teamStatsTitle: "Estatísticas do time",
     teamStatsSubtitle: "Projecao previa segundo seu XI e o formato escolhido.",
     winChance: "Chance de ganhar",
-    expectedPosition: "Posicao esperada",
+    expectedPosition: "Fase esperada",
     expectedLeagueRank: "Posicao {rank}/36",
     expectedGroupRank: "{rank}/4 no grupo",
+    stageChampion: "Campeao",
+    stageFinal: "Final",
+    stageSemifinal: "Semifinal",
+    stageQuarterfinal: "Quartas",
+    stageRoundOf16: "Oitavas",
+    stagePlayoff: "Play-off",
+    stageGroupOut: "Eliminado nos grupos",
+    stageLeagueOut: "Eliminado na liga",
     overallPower: "Media geral",
     groupTable: "Tabela final do grupo",
     formatGroups: "Facil: grupos",
@@ -1602,9 +1626,27 @@ function teamProjection(averages = teamAverages()) {
   const groupRank = clamp(1, 4, Math.round(5 - (strength - 72) / 5.5));
   return {
     winChance,
-    expectedPosition: isLeague ? fmt("expectedLeagueRank", { rank: leagueRank }) : fmt("expectedGroupRank", { rank: groupRank }),
+    expectedPosition: expectedTournamentStage(strength, isLeague, leagueRank, groupRank),
     formatLabel: state.competitionMode === "league" ? tr("formatLeague") : tr("formatGroups")
   };
+}
+
+function expectedTournamentStage(strength, isLeague, leagueRank, groupRank) {
+  if (isLeague) {
+    if (leagueRank > 24 || strength < 77) return tr("stageLeagueOut");
+    if (leagueRank > 8 || strength < 81) return tr("stagePlayoff");
+    if (strength < 84) return tr("stageRoundOf16");
+    if (strength < 87) return tr("stageQuarterfinal");
+    if (strength < 90) return tr("stageSemifinal");
+    if (strength < 93) return tr("stageFinal");
+    return tr("stageChampion");
+  }
+  if (groupRank > 2 || strength < 76) return tr("stageGroupOut");
+  if (strength < 81) return tr("stageRoundOf16");
+  if (strength < 85) return tr("stageQuarterfinal");
+  if (strength < 89) return tr("stageSemifinal");
+  if (strength < 92) return tr("stageFinal");
+  return tr("stageChampion");
 }
 
 function renderPitch() {

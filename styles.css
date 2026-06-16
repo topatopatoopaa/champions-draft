@@ -806,7 +806,7 @@ h2 {
 }
 
 .roll-meter {
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
@@ -3192,5 +3192,51 @@ dialog::backdrop {
 
   .record-strip span:last-child {
     grid-column: span 2;
+  }
+}
+
+#resultDialog {
+  width: min(980px, calc(100vw - 28px));
+  max-height: calc(100vh - 24px);
+  overflow: hidden;
+}
+
+#resultDialog .result-modal {
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+@media (min-width: 901px) {
+  #resultDialog .result-modal {
+    padding: 18px 24px 20px;
+  }
+
+  #resultDialog .result-modal h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  #resultDialog .final-stats span {
+    min-height: 76px;
+  }
+
+  #resultDialog .final-stats strong {
+    font-size: 30px;
+  }
+
+  #resultDialog .record-strip strong {
+    font-size: 20px;
+  }
+
+  #resultDialog .contribution-card p {
+    padding: 6px 10px;
+  }
+
+  #resultDialog .final-pitch {
+    width: min(100%, 390px);
+    height: 430px;
+    margin-top: 14px;
   }
 }

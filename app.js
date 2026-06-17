@@ -76,6 +76,13 @@ const teamPool = [
     p("Wesley Sneijder", 94, ["AM", "CM"]), p("Dejan Stankovic", 86, ["CM", "RM"]), p("Samuel Eto'o", 91, ["LW", "ST"]),
     p("Diego Milito", 94, ["ST"]), p("Goran Pandev", 84, ["RW", "ST"])
   ]),
+  team(2697, "Inter", "1998/99", "Cuartofinalista con Ronaldo y Baggio", 88, [
+    p("Gianluca Pagliuca", 87, ["GK"]), p("Javier Zanetti", 91, ["RB", "RM", "CM"]), p("Giuseppe Bergomi", 84, ["CB", "RB"]),
+    p("Taribo West", 82, ["CB"]), p("Francesco Colonnese", 80, ["CB", "LB"]), p("Mikael Silvestre", 79, ["LB", "CB"]),
+    p("Diego Simeone", 88, ["DM", "CM"]), p("Paulo Sousa", 84, ["CM", "DM"]), p("Ze Elias", 79, ["DM", "CM"]),
+    p("Youri Djorkaeff", 88, ["AM", "ST"]), p("Roberto Baggio", 90, ["AM", "ST"]), p("Ronaldo", 97, ["ST"]),
+    p("Ivan Zamorano", 86, ["ST"]), p("Nicola Ventola", 81, ["ST"])
+  ]),
   team(44, "Liverpool", "2018/19", "Campeon en Madrid", 94, [
     p("Alisson", 93, ["GK"]), p("Trent Alexander-Arnold", 90, ["RB", "RM"]), p("Virgil van Dijk", 96, ["CB"]),
     p("Joel Matip", 87, ["CB"]), p("Andy Robertson", 91, ["LB", "LM"]), p("Fabinho", 90, ["DM", "CB"]),
@@ -269,6 +276,12 @@ teamPool.push(
     p("Iker Casillas", 88, ["GK"]), p("Michel Salgado", 85, ["RB"]), p("Fernando Hierro", 88, ["CB"]), p("Ivan Helguera", 85, ["CB", "DM"]),
     p("Roberto Carlos", 93, ["LB", "LM"]), p("Claude Makelele", 89, ["DM", "CM"]), p("Luis Figo", 93, ["RW", "RM"]), p("Zinedine Zidane", 96, ["AM", "CM"]),
     p("Santiago Solari", 84, ["LM", "CM"]), p("Raul", 92, ["ST", "AM"]), p("Fernando Morientes", 87, ["ST"]), p("Guti", 84, ["AM", "CM"])
+  ]),
+  team(2829, "Real Madrid", "2002/03", "Semifinalista galactico con Ronaldo", 92, [
+    p("Iker Casillas", 89, ["GK"]), p("Michel Salgado", 84, ["RB"]), p("Fernando Hierro", 86, ["CB"]), p("Ivan Helguera", 86, ["CB", "DM"]),
+    p("Roberto Carlos", 95, ["LB", "LM"]), p("Claude Makelele", 91, ["DM", "CM"]), p("Luis Figo", 94, ["RW", "RM"]), p("Zinedine Zidane", 96, ["AM", "CM"]),
+    p("Steve McManaman", 82, ["RM", "CM", "AM"]), p("Guti", 85, ["AM", "CM", "ST"]), p("Raul", 92, ["ST", "AM"]), p("Ronaldo", 97, ["ST"]),
+    p("Fernando Morientes", 86, ["ST"])
   ]),
   team(2672, "Bayern", "2000/01", "Campeon por penales en Milan", 90, [
     p("Oliver Kahn", 94, ["GK"]), p("Willy Sagnol", 84, ["RB"]), p("Samuel Kuffour", 86, ["CB"]), p("Thomas Linke", 84, ["CB"]),
@@ -584,6 +597,57 @@ teamPool.push(
   ])
 );
 
+teamPool.push(
+  team(2719, "Marseille", "1992/93", "Primer campeon frances de Champions", 90, [
+    p("Fabien Barthez", 86, ["GK"]), p("Jocelyn Angloma", 86, ["RB", "RM"]), p("Basile Boli", 88, ["CB"]), p("Marcel Desailly", 91, ["CB", "DM"]),
+    p("Eric Di Meco", 85, ["LB", "CB"]), p("Didier Deschamps", 90, ["DM", "CM"]), p("Franck Sauzee", 88, ["CM", "DM"]), p("Jean-Jacques Eydelie", 82, ["CM", "RM"]),
+    p("Abedi Pele", 92, ["AM", "LW", "RW"]), p("Alen Boksic", 90, ["ST"]), p("Rudi Voller", 88, ["ST"]), p("Jean-Christophe Thomas", 80, ["LM", "CM"]),
+    p("Bernard Casoni", 81, ["CB", "RB"]), p("Jean-Philippe Durand", 80, ["CM", "DM"]), p("Jean-Marc Ferreri", 80, ["AM", "ST"]), p("Pascal Olmeta", 80, ["GK"])
+  ]),
+  team(2692, "Milan", "1992/93", "Finalista con los holandeses", 92, [
+    p("Sebastiano Rossi", 88, ["GK"]), p("Mauro Tassotti", 88, ["RB"]), p("Alessandro Costacurta", 91, ["CB"]), p("Franco Baresi", 94, ["CB"]),
+    p("Paolo Maldini", 94, ["LB", "CB"]), p("Gianluigi Lentini", 88, ["RM", "LM"]), p("Demetrio Albertini", 88, ["CM", "DM"]), p("Frank Rijkaard", 91, ["DM", "CM", "CB"]),
+    p("Roberto Donadoni", 90, ["LM", "RM"]), p("Marco van Basten", 96, ["ST"]), p("Daniele Massaro", 86, ["ST", "LW"]), p("Jean-Pierre Papin", 90, ["ST"]),
+    p("Dejan Savicevic", 89, ["AM", "RW"]), p("Zvonimir Boban", 86, ["AM", "CM", "RM"]), p("Alberico Evani", 84, ["LM", "CM"]), p("Stefano Eranio", 82, ["RM", "CM"]),
+    p("Stefano Nava", 80, ["CB"]), p("Carlo Cudicini", 78, ["GK"])
+  ]),
+  team(2692, "Milan", "1993/94", "Baile de Atenas", 92, [
+    p("Sebastiano Rossi", 88, ["GK"]), p("Mauro Tassotti", 87, ["RB"]), p("Filippo Galli", 84, ["CB"]), p("Paolo Maldini", 94, ["CB", "LB"]),
+    p("Christian Panucci", 86, ["LB", "RB"]), p("Franco Baresi", 93, ["CB"]), p("Alessandro Costacurta", 91, ["CB"]), p("Demetrio Albertini", 89, ["CM", "DM"]),
+    p("Marcel Desailly", 91, ["DM", "CB", "CM"]), p("Zvonimir Boban", 88, ["RM", "CM", "AM"]), p("Roberto Donadoni", 89, ["LM", "RM"]), p("Dejan Savicevic", 91, ["AM", "RW"]),
+    p("Daniele Massaro", 88, ["ST", "LW"]), p("Marco Simone", 84, ["ST", "LW"]), p("Gianluigi Lentini", 84, ["RM", "LM"]), p("Angelo Carbone", 79, ["RM", "CM"]),
+    p("Stefano Nava", 79, ["CB"]), p("Mario Ielpo", 78, ["GK"])
+  ]),
+  team(2817, "Barcelona", "1993/94", "Dream Team de Cruyff", 91, [
+    p("Andoni Zubizarreta", 88, ["GK"]), p("Albert Ferrer", 85, ["RB"]), p("Ronald Koeman", 91, ["CB", "DM"]), p("Miguel Angel Nadal", 87, ["CB", "DM"]),
+    p("Sergi Barjuan", 84, ["LB", "LM"]), p("Pep Guardiola", 88, ["DM", "CM"]), p("Jose Mari Bakero", 87, ["CM", "AM"]), p("Guillermo Amor", 85, ["CM"]),
+    p("Hristo Stoichkov", 94, ["LW", "ST", "RW"]), p("Romario", 95, ["ST"]), p("Txiki Begiristain", 85, ["LW", "ST"]), p("Michael Laudrup", 91, ["AM", "ST", "RW"]),
+    p("Juan Carlos", 80, ["LB", "CB"]), p("Carles Busquets", 78, ["GK"]), p("Eusebio Sacristan", 82, ["CM", "DM"]), p("Jon Andoni Goikoetxea", 83, ["RM", "RW", "RB"]),
+    p("Quique Estebaranz", 80, ["LM", "RM"]), p("Julio Salinas", 83, ["ST"])
+  ]),
+  team(2692, "Milan", "1994/95", "Finalista de Viena", 90, [
+    p("Sebastiano Rossi", 87, ["GK"]), p("Christian Panucci", 86, ["RB", "LB"]), p("Alessandro Costacurta", 91, ["CB"]), p("Franco Baresi", 92, ["CB"]),
+    p("Paolo Maldini", 94, ["LB", "CB"]), p("Demetrio Albertini", 88, ["DM", "CM"]), p("Marcel Desailly", 90, ["DM", "CB", "CM"]), p("Roberto Donadoni", 88, ["RM", "LM"]),
+    p("Zvonimir Boban", 88, ["LM", "CM", "AM"]), p("Marco Simone", 85, ["ST", "LW"]), p("Daniele Massaro", 86, ["ST", "LW"]), p("Dejan Savicevic", 88, ["AM", "RW"]),
+    p("Filippo Galli", 83, ["CB"]), p("Stefano Eranio", 82, ["RM", "CM"]), p("Gianluigi Lentini", 82, ["RM", "LM"]), p("Giovanni Stroppa", 80, ["CM", "AM"]),
+    p("Mario Ielpo", 78, ["GK"])
+  ]),
+  team(2953, "Ajax", "1995/96", "Defensor del titulo", 90, [
+    p("Edwin van der Sar", 90, ["GK"]), p("Sonny Silooy", 83, ["RB", "CB"]), p("Danny Blind", 88, ["CB", "DM"]), p("Frank de Boer", 89, ["CB", "DM", "LB"]),
+    p("Winston Bogarde", 84, ["LB", "CB"]), p("Michael Reiziger", 85, ["RB", "CB"]), p("Ronald de Boer", 88, ["RM", "AM", "ST"]), p("Finidi George", 87, ["RW", "RM"]),
+    p("Edgar Davids", 90, ["CM", "LM", "DM"]), p("Nwankwo Kanu", 86, ["ST"]), p("Jari Litmanen", 92, ["AM", "ST"]), p("Kiki Musampa", 82, ["LW", "LM"]),
+    p("Marc Overmars", 88, ["LW", "RW"]), p("Patrick Kluivert", 87, ["ST"]), p("Arnold Scholten", 80, ["CM", "DM"]), p("Dave van den Bergh", 78, ["LM", "LW"]),
+    p("Nordin Wooter", 78, ["RW", "RM"]), p("Fred Grim", 78, ["GK"])
+  ]),
+  team(9885, "Juventus", "1996/97", "Campeon defensor finalista", 91, [
+    p("Angelo Peruzzi", 91, ["GK"]), p("Sergio Porrini", 82, ["RB", "CB"]), p("Ciro Ferrara", 89, ["CB"]), p("Paolo Montero", 87, ["CB"]),
+    p("Mark Iuliano", 83, ["CB", "LB"]), p("Gianluca Pessotto", 84, ["LB", "RB"]), p("Didier Deschamps", 88, ["DM", "CM"]), p("Angelo Di Livio", 84, ["RM", "RB"]),
+    p("Vladimir Jugovic", 87, ["LM", "CM", "RM"]), p("Zinedine Zidane", 93, ["AM", "CM"]), p("Christian Vieri", 88, ["ST"]), p("Alen Boksic", 88, ["ST"]),
+    p("Alessandro Del Piero", 92, ["ST", "AM", "LW"]), p("Alessio Tacchinardi", 83, ["DM", "CM"]), p("Nicola Amoruso", 81, ["ST"]), p("Michelangelo Rampulla", 78, ["GK"]),
+    p("Moreno Torricelli", 83, ["RB", "LB"]), p("Antonio Conte", 84, ["CM", "DM"])
+  ])
+);
+
 configureTeamPool();
 
 const state = {
@@ -606,6 +670,8 @@ const state = {
   lastFinalCard: null,
   standingsTables: []
 };
+
+let teamDrawBag = [];
 
 const i18n = {
   es: {
@@ -1083,6 +1149,7 @@ function addBenchPlayers() {
     "Barcelona-2014/15": [p("Claudio Bravo", 84, ["GK"]), p("Rafinha", 80, ["CM", "AM"])],
     "Real Madrid-2016/17": [p("Pepe", 86, ["CB"]), p("Lucas Vazquez", 80, ["RW", "RM"])],
     "Inter-2009/10": [p("Thiago Motta", 84, ["DM", "CM"]), p("Davide Santon", 78, ["LB", "RB"])],
+    "Inter-1998/99": [p("Aron Winter", 80, ["CM", "DM"]), p("Benoit Cauet", 79, ["CM", "RM"])],
     "Liverpool-2018/19": [p("Joe Gomez", 82, ["CB", "RB"]), p("Naby Keita", 80, ["CM"])],
     "Man City-2022/23": [p("Riyad Mahrez", 87, ["RW"]), p("Manuel Akanji", 82, ["CB", "RB"])],
     "Bayern-2019/20": [p("Philippe Coutinho", 86, ["AM", "LW"]), p("Benjamin Pavard", 82, ["RB", "CB"])],
@@ -1119,6 +1186,7 @@ function addBenchPlayers() {
     "Lazio-1999/00": [p("Alen Boksic", 84, ["ST"]), p("Roberto Mancini", 82, ["ST", "AM"])],
     "Barcelona-2010/11": [p("Seydou Keita", 82, ["CM", "DM", "LM"]), p("Bojan Krkic", 78, ["ST", "LW"])],
     "Real Madrid-2001/02": [p("Steve McManaman", 82, ["RM", "CM", "AM"]), p("Flavio Conceicao", 81, ["DM", "CM"])],
+    "Real Madrid-2002/03": [p("Javier Portillo", 79, ["ST"]), p("Santiago Solari", 82, ["LM", "CM"])],
     "Bayern-2000/01": [p("Alexander Zickler", 80, ["ST", "RW"]), p("Patrik Andersson", 83, ["CB"])],
     "Liverpool-2021/22": [p("Roberto Firmino", 85, ["ST", "AM"]), p("Naby Keita", 80, ["CM"])],
     "Chelsea-2007/08": [p("Salomon Kalou", 80, ["LW", "ST"]), p("Juliano Belletti", 80, ["RB", "CM"])]
@@ -1156,6 +1224,7 @@ const crestFiles = {
   "Lyon": "Olympique-Lyonnais-logo-500x281.png",
   "Man City": "Manchester-City-Logo-500x313.png",
   "Man United": "Manchester-United-Logo-493x500.png",
+  "Marseille": "Marsella.png",
   "Milan": "AC-Milan-Logo-500x281.png",
   "Monaco": "monaco.png",
   "Napoli": "Napoli-Logo-500x281.png",
@@ -1450,10 +1519,25 @@ function selectNextTeam(consumeRoll) {
     viable = teamPool.filter((item) => item.roster.some((player) => player.positions.some((position) => open.includes(position))));
   }
   const source = viable.length ? viable : teamPool;
-  const next = source[Math.floor(Math.random() * source.length)];
+  const next = drawTeamFromBag(source);
   if (!state.usedTeamKeys.includes(teamKey(next))) {
     state.usedTeamKeys.push(teamKey(next));
   }
+  return next;
+}
+
+function drawTeamFromBag(candidates) {
+  if (!candidates.length) return null;
+  const candidateKeys = new Set(candidates.map(teamKey));
+  let index = teamDrawBag.findIndex((item) => candidateKeys.has(teamKey(item)));
+  if (index < 0) {
+    const bagKeys = new Set(teamDrawBag.map(teamKey));
+    const missing = candidates.filter((item) => !bagKeys.has(teamKey(item)));
+    teamDrawBag.push(...shuffle(missing.length ? missing : candidates));
+    index = teamDrawBag.findIndex((item) => candidateKeys.has(teamKey(item)));
+  }
+  if (index < 0) return candidates[Math.floor(Math.random() * candidates.length)];
+  const [next] = teamDrawBag.splice(index, 1);
   return next;
 }
 
@@ -2133,6 +2217,7 @@ async function playMatch(round, userPower) {
       <h3><span>${tr("yourXI")}</span><b>${tr("versus")}</b><img src="${crestUrl(opponent)}" alt="${opponent.name}"><span>${opponent.name} ${opponent.season}</span></h3>
       <div class="match-clock"><span id="matchMinute">0'</span><div><i id="clockFill"></i></div></div>
       <div class="live-score"><span id="liveUser">0</span><b>-</b><span id="liveRival">0</span></div>
+      <div class="penalty-stage" id="penaltyStage"></div>
       <div class="timeline" id="timeline"></div>
     </div>
   `;
@@ -2159,7 +2244,7 @@ async function playMatch(round, userPower) {
   let penalties = null;
   let userWon = userGoals > rivalGoals;
   if (round.knockout && userGoals === rivalGoals) {
-    penalties = await playPenalties(opponent, timelineEl);
+    penalties = await playPenalties(opponent, stage.querySelector("#penaltyStage"));
     userWon = penalties.user > penalties.rival;
   }
   addTimeline(fmt("finalWhistle", { team: tr("yourXI"), userGoals, rivalGoals, opponent: opponent.name }), timelineEl);
@@ -2221,11 +2306,13 @@ function sampleGoals(expected) {
   return Math.min(5, goals);
 }
 
-async function playPenalties(opponent, timelineEl = document.querySelector("#timeline")) {
+async function playPenalties(opponent, penaltyHost = document.querySelector("#penaltyStage") || document.querySelector("#timeline")) {
+  const timelineEl = document.querySelector("#timeline");
+  const host = penaltyHost || timelineEl || document.querySelector("#matchStage");
   const board = document.createElement("div");
   board.className = "penalty-board";
   board.innerHTML = `<h4>${tr("penalties")}</h4><div id="penaltyUser" class="penalty-row"><strong>${tr("yourXI")}</strong></div><div id="penaltyRival" class="penalty-row"><strong>${opponent.name}</strong></div>`;
-  timelineEl.append(board);
+  host.append(board);
   let user = 0;
   let rival = 0;
   for (let i = 0; i < 5; i += 1) {
@@ -2270,7 +2357,10 @@ function addPenaltyMark(rowId, scored) {
   const mark = document.createElement("span");
   mark.className = `penalty-mark ${scored ? "scored" : "missed"}`;
   mark.textContent = scored ? tr("scored") : tr("missed");
-  document.querySelector(`#${rowId}`).append(mark);
+  const row = document.querySelector(`#${rowId}`);
+  if (!row) return;
+  row.append(mark);
+  row.scrollLeft = row.scrollWidth;
 }
 
 function addGroupVerdict(alive, wins, draws, points) {
@@ -2431,10 +2521,12 @@ function backToDraft(clearHash = true) {
 }
 
 function addTimeline(text, timelineEl = document.querySelector("#timeline"), type = "") {
+  if (!timelineEl) return;
   const item = document.createElement("div");
   item.className = `timeline-event ${type}`;
   item.textContent = text;
   timelineEl.append(item);
+  timelineEl.scrollTop = timelineEl.scrollHeight;
 }
 
 function renderBracketLog(log) {
